@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — HealthMed Hospital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .services-main { padding-block:var(--section-pad); }
+    .services-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem; margin-top:3.5rem; }
+    .svc-card {
+      background:var(--white); border:1.5px solid var(--grey-2);
+      border-radius:var(--radius-lg); overflow:hidden;
+      transition:border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+    }
+    .svc-card:hover { border-color:rgba(214,40,40,0.3); transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+    .svc-card-top {
+      padding:2rem; display:flex; align-items:flex-start; gap:1.25rem;
+      border-bottom:1px solid var(--grey-1);
+    }
+    .svc-card-icon {
+      width:56px; height:56px; border-radius:var(--radius-md);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+      transition:transform 0.3s var(--ease-spring);
+    }
+    .svc-card:hover .svc-card-icon { transform:scale(1.1) rotate(-3deg); }
+    .svc-card-icon svg { width:26px; height:26px; }
+    .svc-card-icon.red   { background:var(--red-light);   } .svc-card-icon.red svg   { color:var(--red); }
+    .svc-card-icon.cyan  { background:var(--cyan-light);  } .svc-card-icon.cyan svg  { color:var(--cyan-mid); }
+    .svc-card-icon.navy  { background:var(--navy-light);  } .svc-card-icon.navy svg  { color:var(--navy); }
+    .svc-card-title { font-size:1.1rem; font-weight:700; color:var(--text-dark); margin-bottom:0.3rem; }
+    .svc-card-badge { display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.18rem 0.6rem; border-radius:99px; }
+    .svc-card-badge.red   { background:var(--red-light);  color:var(--red); }
+    .svc-card-badge.cyan  { background:var(--cyan-light); color:var(--cyan-mid); }
+    .svc-card-badge.navy  { background:var(--navy-light); color:var(--navy); }
+    .svc-card-body { padding:1.5rem 2rem 2rem; }
+    .svc-card-desc { font-size:0.9rem; color:var(--text-mid); line-height:1.8; max-width:none; }
+    .svc-card-points { margin-top:1.25rem; display:flex; flex-direction:column; gap:0.6rem; }
+    .svc-point { display:flex; align-items:flex-start; gap:0.65rem; font-size:0.85rem; color:var(--text-mid); }
+    .svc-point-dot { width:6px; height:6px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:0.45rem; }
+    .svc-cta { margin-top:1.5rem; }
+  </style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pre-logo-3d"><img src="healthmed_logo_new.png" alt="HealthMed" style="width:80px;height:80px;object-fit:contain;"/></div>
+  <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
+  <div class="pre-label" id="pre-label">0%</div>
+</div>
+<div id="progress-bar"></div>
+<button id="back-top" aria-label="Back to top"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg></button>
+
+<div class="top-banner">
+  <div class="top-banner-inner">
+    <p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p>
+    <div class="top-banner-right">
+      <a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a>
+      <a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
+    </div>
+  </div>
+</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark"><img src="healthmed_logo_new.png" alt="HealthMed Hospital Logo"/></div>
+      <div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="laboratory.html">Laboratory</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="laboratory.html" onclick="closeMobile()">Laboratory</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="contact.html" onclick="closeMobile()">Book Appointment</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-wm"><img src="healthmed_logo_new.png" alt=""/></div>
+  <div class="container page-hero-inner">
+    <div class="page-hero-tag">What We Offer</div>
+    <h1>Our Medical Services</h1>
+    <p>Comprehensive, round-the-clock healthcare covering every stage of life — delivered with expertise and compassion in Uyo, Akwa Ibom.</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-main">
+  <div class="container">
+    <div class="section-tag reveal">24-Hour Services</div>
+    <p class="reveal" style="transition-delay:0.1s;font-size:1.05rem;">All services listed below are available 24 hours a day, 7 days a week.</p>
+
+    <div class="services-grid stagger">
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg></div>
+          <div><div class="svc-card-title">Emergency Care</div><span class="svc-card-badge red">Priority Response</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Our emergency unit provides immediate, life-saving medical intervention around the clock. Whether it's a trauma, cardiac event, or sudden illness — our team responds fast.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Immediate triage and assessment</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Resuscitation and stabilisation</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>24/7 on-call physicians</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Rapid diagnostic support</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-red" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Get Emergency Help</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div><div class="svc-card-title">Family Medicine</div><span class="svc-card-badge cyan">All Ages</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Holistic primary care for every member of your family. From routine checkups to managing chronic conditions — we are your first point of health contact.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Routine health examinations</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Chronic disease management</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Preventive care and vaccinations</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Health counselling</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Consultation</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/></svg></div>
+          <div><div class="svc-card-title">Maternity Services</div><span class="svc-card-badge navy">Mother &amp; Child</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Comprehensive maternity care from conception through delivery and beyond. Our experienced team ensures a safe, supported pregnancy journey.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Antenatal (prenatal) care</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Safe delivery and labour support</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Postnatal mother and baby care</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Breastfeeding and nutrition guidance</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Maternity Care</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M7 13.5C3.6 14.8 2 17 2 19v2h20v-2c0-2-1.6-4.2-5-5.5"/></svg></div>
+          <div><div class="svc-card-title">Child Care</div><span class="svc-card-badge cyan">Paediatrics</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Dedicated paediatric care tailored to the unique needs of infants, children, and adolescents. Keeping your child healthy from day one.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Immunisations and vaccines</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Growth and development monitoring</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Childhood illness treatment</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Nutritional advice</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Child Visit</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg></div>
+          <div><div class="svc-card-title">General Surgery</div><span class="svc-card-badge red">Surgical</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Safe, effective surgical procedures in a modern, sterile theatre. Our experienced surgeons handle a wide range of general and minor surgical cases.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Minor and major surgical procedures</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Pre and post-operative care</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Wound management</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Anaesthesia and pain management</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Enquire About Surgery</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8 10h8M8 14h5"/></svg></div>
+          <div><div class="svc-card-title">Pharmacy</div><span class="svc-card-badge cyan">In-House</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Our fully stocked on-site pharmacy dispenses quality, authentic medications promptly — so you can begin treatment without delay.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Prescription dispensing</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Over-the-counter medications</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Pharmaceutical consultation</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Medication counselling</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Visit Pharmacy</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+          <div><div class="svc-card-title">Mental Health &amp; Psychiatry</div><span class="svc-card-badge navy">Confidential</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Confidential, compassionate mental health support. Our psychiatrists and counsellors provide evidence-based care for all mental health conditions without stigma.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Psychiatric assessment</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Individual counselling</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Medication management</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Crisis intervention support</div>
+          </div>
+          <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Consultation</a></div>
+        </div>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-card-top">
+          <div class="svc-card-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18"/><path d="M9 21H5a2 2 0 0 1-2-2v-4"/></svg></div>
+          <div><div class="svc-card-title">Laboratory Services</div><span class="svc-card-badge red">Same-Day Results</span></div>
+        </div>
+        <div class="svc-card-body">
+          <p class="svc-card-desc">Fast, accurate on-site diagnostic testing covering a full range of common and complex tests. Results the same day — no delays, no referrals.</p>
+          <div class="svc-card-points">
+            <div class="svc-point"><span class="svc-point-dot"></span>Malaria, Typhoid, Blood Group</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>PCV, Genotype, HIV screening</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Full Blood Count, Urinalysis</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>And much more</div>
+          </div>
+          <div class="svc-cta"><a href="laboratory.html" class="btn btn-red" style="font-size:0.82rem;padding:0.6rem 1.4rem;">View Lab Tests</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="emergency-strip">
+  <div class="container">
+    <div class="emergency-inner reveal">
+      <div class="emergency-text"><strong>Medical Emergency? Don't Wait.</strong><span>Our emergency team is on standby 24 hours a day, every day.</span></div>
+      <div class="emergency-actions">
+        <a href="tel:+2347087445560" class="btn btn-white"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
+        <a href="contact.html" class="btn btn-outline-white">Book Appointment</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row"><div class="footer-brand-mark"><img src="healthmed_logo_new.png" alt="HealthMed Hospital"/></div><div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div></div>
+        <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
+        <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
+      </div>
+      <div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div>
+      <div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div>
+      <div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div><div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);"><div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div><a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:white;">+234 708 744 5560</a></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p><p><a href="#">Privacy Policy</a></p></div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
