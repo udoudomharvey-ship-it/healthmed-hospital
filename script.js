@@ -3,22 +3,33 @@
 ═══════════════════════════════════════ */
 
 /* ── Preloader ── */
-(function(){
+(function () {
   const loader = document.getElementById('preloader');
   if (!loader) return;
   const fill = document.getElementById('pre-bar');
   const lbl  = document.getElementById('pre-label');
-  let p = 0;
+  let p = 0, done = false;
+
+  function complete() {
+    if (done) return;
+    done = true;
+    if (fill) fill.style.width = '100%';
+    if (lbl)  lbl.textContent  = '100%';
+    setTimeout(() => {
+      loader.classList.add('done');
+      setTimeout(() => { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 800);
+    }, 350);
+  }
+
   const iv = setInterval(() => {
-    p += Math.random() * 22 + 5;
-    if (p >= 100) {
-      p = 100;
-      clearInterval(iv);
-      setTimeout(() => loader.classList.add('done'), 250);
-    }
+    p += Math.random() * 20 + 8;
+    if (p >= 100) { p = 100; clearInterval(iv); complete(); return; }
     if (fill) fill.style.width = p + '%';
     if (lbl)  lbl.textContent  = Math.floor(p) + '%';
-  }, 70);
+  }, 75);
+
+  window.addEventListener('load', () => { clearInterval(iv); setTimeout(complete, 300); });
+  setTimeout(() => { clearInterval(iv); complete(); }, 3500);
 })();
 
 /* ── Progress bar ── */
@@ -36,13 +47,13 @@ function updateNav() {
   if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 20);
 }
 
-/* ── Active nav link (filename match) ── */
+/* ── Active nav link ── */
 function setActiveNav() {
   const page = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
     const href = a.getAttribute('href') || '';
-    const match = href.includes(page) || (page === 'index.html' && (href === 'index.html' || href === './'));
-    a.classList.toggle('active', match);
+    const match = href === page || (page === 'index.html' && (href === 'index.html' || href === './'));
+    if (!a.classList.contains('nav-cta')) a.classList.toggle('active', match);
   });
 }
 
@@ -51,12 +62,10 @@ const backTop = document.getElementById('back-top');
 function updateBackTop() {
   if (backTop) backTop.classList.toggle('show', window.scrollY > 500);
 }
-if (backTop) backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+if (backTop) backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 /* ── Scroll bundle ── */
-window.addEventListener('scroll', () => {
-  updateProgress(); updateNav(); updateBackTop();
-}, { passive: true });
+window.addEventListener('scroll', () => { updateProgress(); updateNav(); updateBackTop(); }, { passive: true });
 updateNav();
 
 /* ── Intersection Observer ── */
@@ -65,13 +74,12 @@ const ro = new IntersectionObserver(entries => {
     if (!entry.isIntersecting) return;
     entry.target.classList.add('visible');
     if (entry.target.classList.contains('stagger'))
-      [...entry.target.children].forEach((c,i) =>
-        setTimeout(() => c.classList.add('visible'), i * 100));
+      [...entry.target.children].forEach((c, i) =>
+        setTimeout(() => c.classList.add('visible'), i * 110));
     ro.unobserve(entry.target);
   });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger')
-  .forEach(el => ro.observe(el));
+}, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el => ro.observe(el));
 
 /* ── Hamburger ── */
 const hamburger  = document.getElementById('hamburger');
@@ -93,46 +101,48 @@ function closeMobile() {
 document.querySelectorAll('.btn').forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const r = btn.getBoundingClientRect();
-    btn.style.transform = `translate(${(e.clientX-r.left-r.width/2)*0.2}px,${(e.clientY-r.top-r.height/2)*0.2}px)`;
+    btn.style.transform = `translate(${(e.clientX-r.left-r.width/2)*0.18}px,${(e.clientY-r.top-r.height/2)*0.18}px)`;
   });
   btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
     btn.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+    btn.style.transform = '';
     setTimeout(() => { btn.style.transition = ''; }, 500);
   });
 });
 
-/* ── 3D logo tilt on hover ── */
+/* ── 3D tilt on nav logo ── */
 const logoMark = document.querySelector('.nav-logo-mark');
 if (logoMark) {
   logoMark.addEventListener('mousemove', e => {
     const r = logoMark.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width  - 0.5) * 30;
-    const y = ((e.clientY - r.top)  / r.height - 0.5) * -30;
-    const img = logoMark.querySelector('img');
-    if (img) img.style.transform = `perspective(200px) rotateX(${y}deg) rotateY(${x}deg) scale(1.1)`;
+    const x = ((e.clientX-r.left)/r.width - 0.5) * 35;
+    const y = ((e.clientY-r.top)/r.height  - 0.5) * -35;
+    const svg = logoMark.querySelector('svg');
+    if (svg) svg.style.transform = `perspective(300px) rotateX(${y}deg) rotateY(${x}deg) scale(1.12)`;
   });
   logoMark.addEventListener('mouseleave', () => {
-    const img = logoMark.querySelector('img');
-    if (img) img.style.transform = '';
+    const svg = logoMark.querySelector('svg');
+    if (svg) svg.style.transform = '';
   });
 }
 
-/* ── Contact form handler ── */
+/* ── Contact form ── */
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', e => {
     e.preventDefault();
-    const btn    = document.getElementById('submit-btn');
+    const btn = document.getElementById('submit-btn');
     const status = document.getElementById('form-status');
-    btn.textContent = 'Sending...'; btn.disabled = true;
+    if (btn) { btn.textContent = 'Sending…'; btn.disabled = true; }
     setTimeout(() => {
-      btn.textContent = 'Appointment Booked ✓';
-      btn.style.cssText = 'background:var(--cyan);color:white;font-family:var(--font-body);font-size:0.88rem;font-weight:600;padding:0.8rem 1.8rem;border-radius:var(--radius-sm);cursor:default;border:none;display:inline-flex;align-items:center;';
+      if (btn) {
+        btn.textContent = 'Appointment Booked ✓';
+        btn.style.cssText = 'background:var(--cyan);color:white;font-family:var(--font-body);font-size:0.88rem;font-weight:600;padding:0.8rem 1.8rem;border-radius:var(--radius-sm);cursor:default;border:none;display:inline-flex;align-items:center;';
+      }
       if (status) { status.textContent = "We'll contact you within 2 hours."; status.classList.add('show'); }
       contactForm.reset();
       setTimeout(() => {
-        btn.textContent = 'Book Appointment'; btn.disabled = false; btn.style.cssText = '';
+        if (btn) { btn.textContent = 'Book Appointment'; btn.disabled = false; btn.style.cssText = ''; }
         if (status) status.classList.remove('show');
       }, 6000);
     }, 1400);

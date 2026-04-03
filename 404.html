@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page Not Found — HealthMed Hospital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .not-found {
+      min-height: calc(100dvh - 72px - 40px);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 4rem 2rem;
+    }
+    .not-found-logo {
+      margin-bottom: 2rem;
+      animation: logoSpin3d 1s ease forwards;
+    }
+    .not-found-logo svg { width: 80px; height: 80px; filter: drop-shadow(2px 8px 18px rgba(214,40,40,0.4)); }
+    .not-found h1 {
+      font-family: var(--font-impact); font-size: clamp(5rem,15vw,10rem);
+      color: var(--grey-2); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .not-found h2 { font-family: var(--font-display); font-size: clamp(1.4rem,3vw,2rem); margin-bottom: 1rem; }
+    .not-found p  { color: var(--text-light); margin-bottom: 2.5rem; max-width: 42ch; margin-inline: auto; }
+    .not-found-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  </style>
+</head>
+<body>
+<div id="preloader">
+  <div class="pre-logo-3d">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
+      <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
+    </svg>
+  </div>
+  <div class="pre-hospital-name">Health<span>Med</span> Hospital</div>
+  <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
+  <div class="pre-label" id="pre-label">Loading…</div>
+</div>
+<div id="progress-bar"></div>
+<button id="back-top" aria-label="Back to top">
+  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg>
+</button>
+
+<div class="top-banner">
+  <div class="top-banner-inner">
+    <p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p>
+    <div class="top-banner-right">
+      <a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a>
+      <a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
+    </div>
+  </div>
+</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40" style="display:block;flex-shrink:0;">
+          <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
+          <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <strong>Health<span>Med</span> Hospital</strong>
+        <em>Quality Healthcare · <span>RC1505282</span></em>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="laboratory.html">Laboratory</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="laboratory.html" onclick="closeMobile()">Laboratory</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="contact.html" onclick="closeMobile()">Book Appointment</a>
+</div>
+
+<div class="not-found">
+  <div class="not-found-logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
+      <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
+    </svg>
+  </div>
+  <h1>404</h1>
+  <h2>Page Not Found</h2>
+  <p>The page you're looking for doesn't exist or may have moved. Let us help you find what you need.</p>
+  <div class="not-found-actions">
+    <a href="index.html" class="btn btn-red">Go to Home</a>
+    <a href="contact.html" class="btn btn-outline">Book Appointment</a>
+    <a href="tel:+2347087445560" class="btn btn-outline">Call Us Now</a>
+  </div>
+</div>
+
+<div class="emergency-strip">
+  <div class="container">
+    <div class="emergency-inner reveal">
+      <div class="emergency-text">
+        <strong>Medical Emergency? Don't Wait.</strong>
+        <span>Our emergency team is on standby 24 hours a day, every day.</span>
+      </div>
+      <div class="emergency-actions">
+        <a href="tel:+2347087445560" class="btn btn-white">+234 708 744 5560</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <div class="footer-brand-mark">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="34" height="34">
+              <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
+              <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
+            </svg>
+          </div>
+          <div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div>
+        </div>
+        <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
+        <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
+      </div>
+      <div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div>
+      <div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div>
+      <div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div>
+        <div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div>
+          <a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:white;">+234 708 744 5560</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
