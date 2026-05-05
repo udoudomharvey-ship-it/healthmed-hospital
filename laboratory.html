@@ -9,166 +9,413 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    .lab-main { padding-block:var(--section-pad); }
-    .lab-intro { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; margin-top:3rem; }
-    .lab-highlight { background:var(--navy); border-radius:var(--radius-lg); padding:2.75rem; position:relative; overflow:hidden; text-align:center; }
-    .lab-highlight::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:rgba(214,40,40,0.08); }
-    .lab-highlight::after { content:''; position:absolute; bottom:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:rgba(0,180,216,0.06); }
-    .lab-icon-wrap { width:90px; height:90px; border-radius:50%; background:rgba(214,40,40,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; position:relative; z-index:1; }
-    .lab-icon-wrap svg { width:44px; height:44px; color:var(--red); }
-    .lab-highlight h3 { font-family:var(--font-display); font-size:1.6rem; color:var(--white); margin-bottom:0.75rem; position:relative; z-index:1; }
-    .lab-highlight p  { color:rgba(255,255,255,0.6); font-size:0.9rem; max-width:none; position:relative; z-index:1; }
-    .lab-metrics { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.75rem; position:relative; z-index:1; }
-    .lab-metric { background:rgba(255,255,255,0.06); border-radius:var(--radius-sm); padding:1rem; text-align:center; border:1px solid rgba(255,255,255,0.08); }
-    .lab-metric-val { font-family:var(--font-impact); font-size:2rem; color:var(--red); line-height:1; }
-    .lab-metric-lbl { font-size:0.72rem; color:rgba(255,255,255,0.5); margin-top:0.3rem; letter-spacing:0.06em; text-transform:uppercase; }
+    .lab-main { padding-block: var(--section-pad); }
 
-    .tests-section { padding-block:var(--section-pad); background:var(--off-white); }
-    .tests-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-top:3rem; }
+    /* Test catalogue */
+    .test-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.25rem; margin-top:3rem; }
     .test-card {
       background:var(--white); border:1.5px solid var(--grey-2);
-      border-radius:var(--radius-md); padding:1.4rem 1.5rem;
-      display:flex; align-items:flex-start; gap:1rem;
-      transition:border-color 0.25s, background 0.25s, transform 0.25s;
+      border-radius:var(--radius-lg); padding:1.75rem;
+      transition:border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
     }
-    .test-card:hover { border-color:rgba(214,40,40,0.3); background:var(--red-light); transform:translateY(-3px); }
-    .test-dot { width:10px; height:10px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:5px; }
-    .test-name { font-size:0.95rem; font-weight:600; color:var(--text-dark); margin-bottom:0.2rem; }
-    .test-desc { font-size:0.82rem; color:var(--text-light); }
+    .test-card:hover { border-color:rgba(214,40,40,0.3); transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .test-card-top { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+    .test-icon {
+      width:48px; height:48px; border-radius:var(--radius-sm);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .test-icon svg { width:22px; height:22px; }
+    .test-icon.red   { background:var(--red-light);  } .test-icon.red svg   { color:var(--red); }
+    .test-icon.cyan  { background:var(--cyan-light); } .test-icon.cyan svg  { color:var(--cyan-mid); }
+    .test-icon.navy  { background:var(--navy-light); } .test-icon.navy svg  { color:var(--navy); }
+    .test-card-title { font-size:1rem; font-weight:700; color:var(--text-dark); }
+    .test-list { display:flex; flex-direction:column; gap:0.45rem; }
+    .test-item { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.84rem; color:var(--text-mid); }
+    .test-dot  { width:5px; height:5px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:0.52rem; }
+    .test-badge-row { margin-top:1.25rem; }
+    .test-badge {
+      display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:0.1em;
+      text-transform:uppercase; padding:0.2rem 0.65rem; border-radius:99px;
+    }
+    .test-badge.red   { background:var(--red-light);  color:var(--red); }
+    .test-badge.cyan  { background:var(--cyan-light); color:var(--cyan-mid); }
+    .test-badge.navy  { background:var(--navy-light); color:var(--navy); }
 
-    @media (max-width:840px) { .lab-intro{grid-template-columns:1fr;gap:2.5rem;} }
+    /* Lab photos grid */
+    .lab-photos { margin-top:4rem; }
+    .lab-photos h2 { margin-bottom:0.75rem; }
+    .lab-photos p  { margin-bottom:2rem; }
+
+    /* Process steps */
+    .process-section { padding-block:var(--section-pad); background:var(--off-white); }
+    .process-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-top:3rem; position:relative; }
+    .process-steps::before {
+      content:''; position:absolute; top:28px; left:0; right:0; height:1px;
+      background:var(--grey-2); z-index:0;
+    }
+    .process-step { text-align:center; position:relative; z-index:1; }
+    .step-num { width:56px; height:56px; border-radius:50%; background:var(--white); border:2px solid var(--grey-2); display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem; font-family:var(--font-impact); font-size:1.4rem; color:var(--navy); box-shadow:var(--shadow-sm); }
+    .step-num.active { border-color:var(--red); background:var(--red); color:var(--white); box-shadow:0 4px 18px rgba(214,40,40,0.35); }
+    .step-title { font-size:0.92rem; font-weight:700; color:var(--text-dark); margin-bottom:0.4rem; }
+    .step-desc  { font-size:0.8rem; color:var(--text-light); line-height:1.65; }
+
+    /* Turnaround banner */
+    .turnaround-banner {
+      background:var(--navy); border-radius:var(--radius-lg);
+      padding:2.5rem 3rem; display:flex; align-items:center; gap:3rem;
+      margin-top:3.5rem; flex-wrap:wrap;
+    }
+    .ta-num { font-family:var(--font-impact); font-size:4.5rem; color:var(--red); line-height:1; flex-shrink:0; }
+    .ta-text strong { display:block; font-size:1.1rem; color:var(--white); font-weight:700; margin-bottom:0.35rem; }
+    .ta-text p { font-size:0.88rem; color:rgba(255,255,255,0.6); max-width:44ch; line-height:1.7; }
+    .ta-action { margin-left:auto; flex-shrink:0; }
+
+    @media (max-width:640px) {
+      .turnaround-banner { flex-direction:column; gap:1.5rem; padding:2rem; }
+      .ta-action { margin-left:0; }
+    }
   </style>
 </head>
 <body>
+
 <div id="preloader">
   <div class="pre-logo-3d">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-      <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-    </svg>
+    <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"
+         style="width:110px;height:110px;object-fit:contain;filter:drop-shadow(2px 8px 18px rgba(214,40,40,0.45));"/>
   </div>
   <div class="pre-hospital-name">Health<span>Med</span> Hospital</div>
   <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
   <div class="pre-label" id="pre-label">Loading…</div>
 </div>
 <div id="progress-bar"></div>
-<button id="back-top" aria-label="Back to top"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg></button>
+<button id="back-top" aria-label="Back to top">
+  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg>
+</button>
 
-<div class="top-banner"><div class="top-banner-inner"><p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p><div class="top-banner-right"><a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a><a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a></div></div></div>
+<div class="top-banner">
+  <div class="top-banner-inner">
+    <p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p>
+    <div class="top-banner-right">
+      <a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a>
+      <a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
+    </div>
+  </div>
+</div>
 
-<nav id="navbar"><div class="nav-inner"><a href="index.html" class="nav-logo"><div class="nav-logo-mark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40" style="display:block;flex-shrink:0;">
-    <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-    <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-  </svg></div><div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div></a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="laboratory.html" class="active">Laboratory</a></li><li><a href="about.html">About</a></li><li><a href="contact.html" class="nav-cta">Book Appointment</a></li></ul><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
-<div class="mobile-menu" id="mobile-menu"><a href="index.html" onclick="closeMobile()">Home</a><a href="services.html" onclick="closeMobile()">Services</a><a href="laboratory.html" onclick="closeMobile()">Laboratory</a><a href="about.html" onclick="closeMobile()">About</a><a href="contact.html" onclick="closeMobile()">Book Appointment</a></div>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">
+        <img src="assets/healthmed-logo.png" alt="HealthMed Hospital Logo" width="40" height="40" style="display:block;object-fit:contain;"/>
+      </div>
+      <div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="laboratory.html" class="active">Laboratory</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html"      onclick="closeMobile()">Home</a>
+  <a href="services.html"   onclick="closeMobile()">Services</a>
+  <a href="laboratory.html" onclick="closeMobile()">Laboratory</a>
+  <a href="about.html"      onclick="closeMobile()">About</a>
+  <a href="contact.html"    onclick="closeMobile()">Book Appointment</a>
+</div>
 
+<!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-wm"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:1;"><path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="white"/><path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="white"/></svg></div>
+  <div class="page-hero-wm">
+    <img src="assets/healthmed-logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:0.07;filter:brightness(10);"/>
+  </div>
   <div class="container page-hero-inner">
-    <div class="page-hero-tag">Diagnostics</div>
+    <div class="page-hero-tag">Onsite Diagnostics</div>
     <h1>Laboratory Services</h1>
-    <p>Fast, accurate, on-site diagnostic testing — results the same day, so treatment can begin without delay.</p>
+    <p>Fast, accurate diagnostic testing performed entirely on-site at HealthMed Hospital. Same-day results, no external referrals needed.</p>
   </div>
 </div>
 
 <section class="lab-main">
   <div class="container">
-    <div class="lab-intro">
-      <div class="reveal-left">
-        <div class="section-tag">Why Our Lab</div>
-        <h2>Same-day results.<br/>No referrals needed.</h2>
-        <p style="margin-top:1rem;">Our fully equipped on-site laboratory handles a comprehensive range of diagnostic tests. Walk in, get tested, and receive your results the same day — enabling your doctor to make informed treatment decisions immediately.</p>
-        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:0.85rem;">
-          <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.92rem;color:var(--text-mid);">
-            <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--red-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg>
-            </div>Results ready same day
-          </div>
-          <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.92rem;color:var(--text-mid);">
-            <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--red-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg>
-            </div>No referrals or waiting days
-          </div>
-          <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.92rem;color:var(--text-mid);">
-            <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--red-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg>
-            </div>Modern equipment, accurate results
-          </div>
-          <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.92rem;color:var(--text-mid);">
-            <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:var(--red-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M6 8l1.5 1.5L10 6"/></svg>
-            </div>Available 24 hours a day
-          </div>
-        </div>
-        <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;">
-          <a href="contact.html" class="btn btn-red">Book a Lab Test</a>
-          <a href="tel:+2347087445560" class="btn btn-outline">Call the Lab</a>
-        </div>
-      </div>
-      <div class="lab-highlight reveal-right">
-        <div class="lab-icon-wrap">
-          <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h12M21 3v10M12 13l-7 16a2 2 0 0 0 2 3h28a2 2 0 0 0 2-3L30 13"/><path d="M17 22h8M19 27h4"/></svg>
-        </div>
-        <h3>On-Site Laboratory</h3>
-        <p>State-of-the-art diagnostic equipment with trained laboratory scientists delivering precise results.</p>
-        <div class="lab-metrics">
-          <div class="lab-metric"><div class="lab-metric-val">24</div><div class="lab-metric-lbl">Hours Available</div></div>
-          <div class="lab-metric"><div class="lab-metric-val">1hr</div><div class="lab-metric-lbl">Avg Result Time</div></div>
-          <div class="lab-metric"><div class="lab-metric-val">15<span style="font-size:1.2rem">+</span></div><div class="lab-metric-lbl">Tests Offered</div></div>
-          <div class="lab-metric"><div class="lab-metric-val">0</div><div class="lab-metric-lbl">Referrals Needed</div></div>
-        </div>
-        <a href="contact.html" class="btn btn-red" style="margin-top:1.75rem;width:100%;justify-content:center;">Book a Test Now</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="tests-section">
-  <div class="container">
-    <div class="section-tag reveal">Available Tests</div>
-    <h2 class="reveal" style="transition-delay:0.1s;">Tests we perform</h2>
-    <p class="reveal" style="transition-delay:0.2s;margin-top:0.75rem;">Walk in for any of the following tests — no appointment required for most basic investigations.</p>
-    <div class="tests-grid stagger">
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Malaria Test (RDT &amp; Microscopy)</div><div class="test-desc">Rapid detection of malaria parasites in blood</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Typhoid Test (Widal)</div><div class="test-desc">Antibody detection for Salmonella typhi</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">PCV (Packed Cell Volume)</div><div class="test-desc">Measurement of red blood cell proportion</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Genotype Testing</div><div class="test-desc">Sickle cell and haemoglobin genotype (AA, AS, SS, AC)</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Blood Group &amp; Rhesus Factor</div><div class="test-desc">ABO and Rh blood group determination</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Full Blood Count (FBC)</div><div class="test-desc">Complete analysis of blood cells and indices</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">HIV Screening</div><div class="test-desc">Rapid HIV 1 &amp; 2 antibody screening</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Hepatitis B &amp; C Screening</div><div class="test-desc">Surface antigen and antibody detection</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Urinalysis</div><div class="test-desc">Complete urine analysis for infections and disorders</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Blood Glucose (Fasting &amp; Random)</div><div class="test-desc">Diabetes screening and monitoring</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Pregnancy Test (urine/serum)</div><div class="test-desc">HCG detection for early pregnancy confirmation</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Stool Analysis</div><div class="test-desc">Detection of parasites, bacteria and blood in stool</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Kidney Function Test (KFT)</div><div class="test-desc">Creatinine, urea, and electrolyte levels</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Liver Function Test (LFT)</div><div class="test-desc">AST, ALT, bilirubin and albumin levels</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Lipid Profile</div><div class="test-desc">Cholesterol, HDL, LDL and triglycerides</div></div></div>
-      <div class="test-card"><span class="test-dot"></span><div><div class="test-name">Culture &amp; Sensitivity</div><div class="test-desc">Bacterial identification and antibiotic susceptibility</div></div></div>
-    </div>
-    <div style="text-align:center;margin-top:3rem;" class="reveal">
-      <p style="margin-bottom:1.5rem;font-size:1rem;">Don't see the test you need? Call us — we offer more.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <!-- Turnaround Banner -->
+    <div class="turnaround-banner reveal">
+      <div class="ta-num">Same<br/>Day</div>
+      <div class="ta-text">
+        <strong>Results you don't have to wait days for.</strong>
+        <p>Our fully equipped onsite laboratory processes most tests on the same day. Samples are handled in-house by trained laboratory scientists, so your doctor can begin treatment without unnecessary delay.</p>
+      </div>
+      <div class="ta-action">
         <a href="contact.html" class="btn btn-red">Book a Test</a>
-        <a href="tel:+2347087445560" class="btn btn-outline">Call the Lab</a>
+      </div>
+    </div>
+
+    <!-- Tests -->
+    <div style="margin-top:4.5rem;">
+      <div class="section-tag reveal">What We Test</div>
+      <h2 class="reveal" style="transition-delay:0.1s;">Our Diagnostic Tests</h2>
+      <p class="reveal" style="transition-delay:0.2s;margin-top:0.75rem;">A comprehensive range of routine and specialist diagnostic tests — all processed in our onsite lab.</p>
+    </div>
+
+    <div class="test-grid stagger">
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18"/><path d="M9 21H5a2 2 0 0 1-2-2v-4"/></svg>
+          </div>
+          <div class="test-card-title">Haematology</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>Full Blood Count (FBC)</div>
+          <div class="test-item"><span class="test-dot"></span>Packed Cell Volume (PCV / Haematocrit)</div>
+          <div class="test-item"><span class="test-dot"></span>Blood Group &amp; Rhesus Factor</div>
+          <div class="test-item"><span class="test-dot"></span>Haemoglobin Genotype (AA, AS, SS, SC)</div>
+          <div class="test-item"><span class="test-dot"></span>ESR (Erythrocyte Sedimentation Rate)</div>
+          <div class="test-item"><span class="test-dot"></span>Peripheral Blood Film</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge red">Same Day</span></div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l3 3"/></svg>
+          </div>
+          <div class="test-card-title">Microbiology &amp; Parasitology</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>Malaria Parasite (MP) — Thick &amp; Thin Film</div>
+          <div class="test-item"><span class="test-dot"></span>Malaria Rapid Diagnostic Test (RDT)</div>
+          <div class="test-item"><span class="test-dot"></span>Widal Test (Typhoid Fever)</div>
+          <div class="test-item"><span class="test-dot"></span>Stool Microscopy &amp; Culture</div>
+          <div class="test-item"><span class="test-dot"></span>Urine Culture &amp; Sensitivity</div>
+          <div class="test-item"><span class="test-dot"></span>AFB Smear (Tuberculosis screening)</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge cyan">Same Day</span></div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="test-card-title">Serology &amp; Immunology</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>HIV 1 &amp; 2 Rapid Test</div>
+          <div class="test-item"><span class="test-dot"></span>Hepatitis B Surface Antigen (HBsAg)</div>
+          <div class="test-item"><span class="test-dot"></span>Hepatitis C Antibody</div>
+          <div class="test-item"><span class="test-dot"></span>VDRL / TPHA (Syphilis)</div>
+          <div class="test-item"><span class="test-dot"></span>Rheumatoid Factor (RF)</div>
+          <div class="test-item"><span class="test-dot"></span>Pregnancy Test (Urine &amp; Serum)</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge navy">Same Day</span></div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8 10h8M8 14h5"/></svg>
+          </div>
+          <div class="test-card-title">Clinical Chemistry</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>Random &amp; Fasting Blood Sugar (RBS / FBS)</div>
+          <div class="test-item"><span class="test-dot"></span>Urea, Creatinine &amp; Electrolytes</div>
+          <div class="test-item"><span class="test-dot"></span>Liver Function Tests (LFTs)</div>
+          <div class="test-item"><span class="test-dot"></span>Lipid Profile (Cholesterol, Triglycerides)</div>
+          <div class="test-item"><span class="test-dot"></span>Uric Acid</div>
+          <div class="test-item"><span class="test-dot"></span>Total Protein &amp; Albumin</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge cyan">Same Day</span></div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <div class="test-card-title">Urinalysis</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>Urine Microscopy, Culture &amp; Sensitivity</div>
+          <div class="test-item"><span class="test-dot"></span>Dipstick (Protein, Glucose, Blood, pH)</div>
+          <div class="test-item"><span class="test-dot"></span>Urinary Tract Infection (UTI) screening</div>
+          <div class="test-item"><span class="test-dot"></span>Pregnancy Rapid Test (urine)</div>
+          <div class="test-item"><span class="test-dot"></span>Urine Specific Gravity</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge red">Same Day</span></div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-card-top">
+          <div class="test-icon navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+          </div>
+          <div class="test-card-title">Pre-Op &amp; Antenatal Screening</div>
+        </div>
+        <div class="test-list">
+          <div class="test-item"><span class="test-dot"></span>Pre-operative full blood work</div>
+          <div class="test-item"><span class="test-dot"></span>Blood Group &amp; Rhesus Typing</div>
+          <div class="test-item"><span class="test-dot"></span>HIV, HBsAg, VDRL for antenatal</div>
+          <div class="test-item"><span class="test-dot"></span>Malaria screening in pregnancy</div>
+          <div class="test-item"><span class="test-dot"></span>Genotype for couples / antenatal</div>
+          <div class="test-item"><span class="test-dot"></span>Urine routine for antenatal</div>
+        </div>
+        <div class="test-badge-row"><span class="test-badge navy">Same Day</span></div>
+      </div>
+
+    </div><!-- /test-grid -->
+
+    <!-- LAB FACILITY PHOTOS — lab-specific only -->
+    <div class="lab-photos">
+      <div class="section-tag reveal">Inside The Lab</div>
+      <h2 class="reveal" style="transition-delay:0.1s;">Our Laboratory Facility</h2>
+      <p class="reveal" style="transition-delay:0.2s;">All testing is carried out by trained laboratory scientists in our fully equipped, onsite diagnostic laboratory.</p>
+      <div class="photo-grid-3 stagger">
+
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 3v11a3 3 0 0 0 6 0V3"/><path d="M6 3h12"/><circle cx="12" cy="18" r="1"/>
+          </svg>
+          <div class="photo-placeholder-label">Sample Collection Area</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Phlebotomy &amp; sample intake point</div>
+        </div>
+
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M9 3v18M15 3v18"/>
+          </svg>
+          <div class="photo-placeholder-label">Lab Bench &amp; Microscopes</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Analyst workstations &amp; microscopy equipment</div>
+        </div>
+
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18"/>
+            <path d="M9 21H5a2 2 0 0 1-2-2v-4"/>
+          </svg>
+          <div class="photo-placeholder-label">Specimen Storage &amp; Processing</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Cold storage &amp; centrifuge processing unit</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process-section">
+  <div class="container">
+    <div class="section-tag reveal">How It Works</div>
+    <h2 class="reveal" style="transition-delay:0.1s;">From test request to results — fast.</h2>
+    <div class="process-steps stagger">
+      <div class="process-step">
+        <div class="step-num active">1</div>
+        <div class="step-title">Doctor's Request</div>
+        <p class="step-desc">Your doctor at HealthMed issues a test request form after your consultation.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num active">2</div>
+        <div class="step-title">Sample Collection</div>
+        <p class="step-desc">Blood, urine, or stool samples are collected at our dedicated sample point by trained staff.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num active">3</div>
+        <div class="step-title">Lab Processing</div>
+        <p class="step-desc">Samples are processed immediately by our onsite laboratory scientists using modern equipment.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num active">4</div>
+        <div class="step-title">Same-Day Results</div>
+        <p class="step-desc">Most results are ready the same day. Your doctor reviews and discusses them with you immediately.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="emergency-strip"><div class="container"><div class="emergency-inner reveal"><div class="emergency-text"><strong>Medical Emergency? Don't Wait.</strong><span>Our emergency team is on standby 24 hours a day, every day.</span></div><div class="emergency-actions"><a href="tel:+2347087445560" class="btn btn-white">+234 708 744 5560</a><a href="contact.html" class="btn btn-outline-white">Book Appointment</a></div></div></div></div>
+<div class="emergency-strip">
+  <div class="container">
+    <div class="emergency-inner reveal">
+      <div class="emergency-text">
+        <strong>Need a Test Today?</strong>
+        <span>Walk in or call us to book a laboratory test — same-day results available.</span>
+      </div>
+      <div class="emergency-actions">
+        <a href="tel:+2347087445560" class="btn btn-white">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>
+          +234 708 744 5560
+        </a>
+        <a href="contact.html" class="btn btn-outline-white">Book Online</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-<footer><div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-brand-row"><div class="footer-brand-mark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="34" height="34">
-              <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-              <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-            </svg></div><div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div></div><p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p><p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p></div><div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div><div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div><div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div><div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);"><div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div><a href="tel:+2347087445560" style="font-size:1.5560</a></div></div></div></footer>
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <div class="footer-brand-mark">
+            <img src="assets/healthmed-logo.png" alt="HealthMed" width="34" height="34" style="object-fit:contain;display:block;"/>
+          </div>
+          <div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div>
+        </div>
+        <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
+        <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="laboratory.html">Laboratory</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Book Appointment</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Lab Tests</h4>
+        <div class="footer-links">
+          <a href="laboratory.html">Haematology</a>
+          <a href="laboratory.html">Malaria &amp; Typhoid</a>
+          <a href="laboratory.html">HIV &amp; Hepatitis</a>
+          <a href="laboratory.html">Blood Sugar (RBS/FBS)</a>
+          <a href="laboratory.html">Urinalysis</a>
+          <a href="laboratory.html">Antenatal Screening</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-links">
+          <a href="tel:+2347087445560">+234 708 744 5560</a>
+          <a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a>
+          <a href="contact.html">9 Etim Okon Usanga Close, Uyo</a>
+        </div>
+        <div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div>
+          <a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:#e63946;">+234 708 744 5560</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
 <script src="script.js"></script>
-
-<!-- Floating Emergency Call Button -->
 <a href="tel:+2347087445560" class="float-call-btn" aria-label="Emergency Call">
-  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
-    <path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/>
-  </svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg>
   <span class="float-call-label">Emergency</span>
 </a>
 </body>

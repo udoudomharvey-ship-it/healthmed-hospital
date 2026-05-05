@@ -28,9 +28,9 @@
     }
     .svc-card:hover .svc-card-icon { transform:scale(1.1) rotate(-3deg); }
     .svc-card-icon svg { width:26px; height:26px; }
-    .svc-card-icon.red   { background:var(--red-light);   } .svc-card-icon.red svg   { color:var(--red); }
-    .svc-card-icon.cyan  { background:var(--cyan-light);  } .svc-card-icon.cyan svg  { color:var(--cyan-mid); }
-    .svc-card-icon.navy  { background:var(--navy-light);  } .svc-card-icon.navy svg  { color:var(--navy); }
+    .svc-card-icon.red   { background:var(--red-light);  } .svc-card-icon.red svg   { color:var(--red); }
+    .svc-card-icon.cyan  { background:var(--cyan-light); } .svc-card-icon.cyan svg  { color:var(--cyan-mid); }
+    .svc-card-icon.navy  { background:var(--navy-light); } .svc-card-icon.navy svg  { color:var(--navy); }
     .svc-card-title { font-size:1.1rem; font-weight:700; color:var(--text-dark); margin-bottom:0.3rem; }
     .svc-card-badge { display:inline-block; font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.18rem 0.6rem; border-radius:99px; }
     .svc-card-badge.red   { background:var(--red-light);  color:var(--red); }
@@ -48,10 +48,8 @@
 
 <div id="preloader">
   <div class="pre-logo-3d">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-      <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-    </svg>
+    <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"
+         style="width:110px;height:110px;object-fit:contain;filter:drop-shadow(2px 8px 18px rgba(214,40,40,0.45));"/>
   </div>
   <div class="pre-hospital-name">Health<span>Med</span> Hospital</div>
   <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
@@ -73,10 +71,9 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-mark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40" style="display:block;flex-shrink:0;">
-    <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-    <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-  </svg></div>
+      <div class="nav-logo-mark">
+        <img src="assets/healthmed-logo.png" alt="HealthMed Hospital Logo" width="40" height="40" style="display:block;object-fit:contain;"/>
+      </div>
       <div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div>
     </a>
     <ul class="nav-links">
@@ -99,7 +96,7 @@
 
 <!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-wm"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:1;"><path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="white"/><path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="white"/></svg></div>
+  <div class="page-hero-wm"><img src="assets/healthmed-logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:0.07;filter:brightness(10);"/></div>
   <div class="container page-hero-inner">
     <div class="page-hero-tag">What We Offer</div>
     <h1>Our Medical Services</h1>
@@ -143,7 +140,7 @@
             <div class="svc-point"><span class="svc-point-dot"></span>Routine health examinations</div>
             <div class="svc-point"><span class="svc-point-dot"></span>Chronic disease management</div>
             <div class="svc-point"><span class="svc-point-dot"></span>Preventive care and vaccinations</div>
-            <div class="svc-point"><span class="svc-point-dot"></span>Health counselling</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Health counselling and advice</div>
           </div>
           <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Consultation</a></div>
         </div>
@@ -155,12 +152,12 @@
           <div><div class="svc-card-title">Maternity Services</div><span class="svc-card-badge navy">Mother &amp; Child</span></div>
         </div>
         <div class="svc-card-body">
-          <p class="svc-card-desc">Comprehensive maternity care from conception through delivery and beyond. Our experienced team ensures a safe, supported pregnancy journey.</p>
+          <p class="svc-card-desc">Comprehensive maternity care from conception through delivery and beyond. Our experienced team ensures a safe, supported pregnancy journey. Neonatal infant warmers are on standby for every newborn.</p>
           <div class="svc-card-points">
             <div class="svc-point"><span class="svc-point-dot"></span>Antenatal (prenatal) care</div>
             <div class="svc-point"><span class="svc-point-dot"></span>Safe delivery and labour support</div>
             <div class="svc-point"><span class="svc-point-dot"></span>Postnatal mother and baby care</div>
-            <div class="svc-point"><span class="svc-point-dot"></span>Breastfeeding and nutrition guidance</div>
+            <div class="svc-point"><span class="svc-point-dot"></span>Neonatal infant warmer for newborns</div>
           </div>
           <div class="svc-cta"><a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:0.6rem 1.4rem;">Book Maternity Care</a></div>
         </div>
@@ -189,7 +186,7 @@
           <div><div class="svc-card-title">General Surgery</div><span class="svc-card-badge red">Surgical</span></div>
         </div>
         <div class="svc-card-body">
-          <p class="svc-card-desc">Safe, effective surgical procedures in a modern, sterile theatre. Our experienced surgeons handle a wide range of general and minor surgical cases.</p>
+          <p class="svc-card-desc">Safe, effective surgical procedures in a modern, sterile operating theatre. Our experienced surgeons handle a wide range of general and minor surgical cases.</p>
           <div class="svc-card-points">
             <div class="svc-point"><span class="svc-point-dot"></span>Minor and major surgical procedures</div>
             <div class="svc-point"><span class="svc-point-dot"></span>Pre and post-operative care</div>
@@ -240,7 +237,7 @@
           <div><div class="svc-card-title">Laboratory Services</div><span class="svc-card-badge red">Same-Day Results</span></div>
         </div>
         <div class="svc-card-body">
-          <p class="svc-card-desc">Fast, accurate on-site diagnostic testing covering a full range of common and complex tests. Results the same day — no delays, no referrals.</p>
+          <p class="svc-card-desc">Fast, accurate on-site diagnostic testing covering a full range of common and complex tests. Results the same day — no delays, no referrals needed.</p>
           <div class="svc-card-points">
             <div class="svc-point"><span class="svc-point-dot"></span>Malaria, Typhoid, Blood Group</div>
             <div class="svc-point"><span class="svc-point-dot"></span>PCV, Genotype, HIV screening</div>
@@ -252,6 +249,70 @@
       </div>
 
     </div>
+
+    <!-- FACILITY PHOTOS — all 6 relevant to services -->
+    <div style="margin-top:5rem;">
+      <div class="section-tag reveal">Our Facility</div>
+      <h2 class="reveal" style="transition-delay:0.1s;">Where care happens.</h2>
+      <p class="reveal" style="transition-delay:0.2s;margin-top:1rem;">A look at the spaces and equipment that make quality healthcare possible at HealthMed Hospital.</p>
+      <div class="photo-grid-3 stagger" style="margin-top:2.5rem;">
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="3"/></svg>
+          <div class="photo-placeholder-label">Emergency Unit</div>
+          <div class="photo-placeholder-desc">Photo placeholder — 24/7 emergency care area</div>
+        </div>
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 21h18M4 18h16M6 18v-8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8"/><path d="M9 10h6M9 13h6"/></svg>
+          <div class="photo-placeholder-label">Hospital Ward</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Patient ward beds</div>
+        </div>
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18M15 3v18"/></svg>
+          <div class="photo-placeholder-label">Operating Theatre</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Sterile surgical theatre</div>
+        </div>
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <div class="photo-placeholder-label">Vital Signs Monitor</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Patient monitoring equipment</div>
+        </div>
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M8 13h8M7 18h10"/></svg>
+          <div class="photo-placeholder-label">Infant Warmers</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Neonatal warming unit</div>
+        </div>
+        <div class="photo-placeholder reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          <div class="photo-placeholder-label">Dr. Consulting Room</div>
+          <div class="photo-placeholder-desc">Photo placeholder — Doctor's private consulting room</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFRASTRUCTURE — relevant to services page -->
+    <div style="margin-top:5rem;">
+      <div class="section-tag reveal">Infrastructure</div>
+      <h2 class="reveal" style="transition-delay:0.1s;">Systems that keep us running.</h2>
+      <p class="reveal" style="transition-delay:0.2s;margin-top:1rem;">Behind every service is a reliable infrastructure that ensures nothing stops your care.</p>
+      <div class="infra-grid stagger" style="margin-top:2.5rem;">
+        <div class="infra-card">
+          <div class="infra-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="infra-title">Uninterrupted Power Supply</div>
+          <p class="infra-desc">Backup generator + solar power system ensures zero downtime. All critical equipment stays on even during grid outages — every service, always running.</p>
+        </div>
+        <div class="infra-card">
+          <div class="infra-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+          <div class="infra-title">Functioning Water Supply</div>
+          <p class="infra-desc">Clean, running water available across all wards, theatres, and departments — essential for hygiene, sterilisation, and patient care.</p>
+        </div>
+        <div class="infra-card">
+          <div class="infra-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18"/><path d="M9 21H5a2 2 0 0 1-2-2v-4"/></svg></div>
+          <div class="infra-title">Onsite Laboratory</div>
+          <p class="infra-desc">Fully equipped diagnostic lab on the premises. Same-day results for blood tests, microscopy, and more — no external referrals needed.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -271,23 +332,35 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="footer-brand-row"><div class="footer-brand-mark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="34" height="34">
-              <path d="M50 50 C36 44,18 36,22 20 C26 6,46 12,50 28 C54 12,74 6,78 20 C82 36,64 44,50 50Z" fill="#d62828"/>
-              <path d="M50 50 C36 56,18 64,22 80 C26 94,46 88,50 72 C54 88,74 94,78 80 C82 64,64 56,50 50Z" fill="#d62828"/>
-            </svg></div><div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div></div>
+        <div class="footer-brand-row">
+          <div class="footer-brand-mark">
+            <img src="assets/healthmed-logo.png" alt="HealthMed" width="34" height="34" style="object-fit:contain;display:block;"/>
+          </div>
+          <div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div>
+        </div>
         <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
         <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
       </div>
       <div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div>
       <div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div>
-      <div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div><div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);"><div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div><a href="tel:+2347087445560" style="font-size:1.05rem;font-wei5560</a></div></div></div></footer>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div>
+        <div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div>
+          <a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:#e63946;">+234 708 744 5560</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
 <script src="script.js"></script>
-
-<!-- Floating Emergency Call Button -->
 <a href="tel:+2347087445560" class="float-call-btn" aria-label="Emergency Call">
-  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
-    <path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/>
-  </svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg>
   <span class="float-call-label">Emergency</span>
 </a>
 </body>
