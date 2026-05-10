@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Doctors — HealthMed Hospital, Uyo</title>
+  <meta name="description" content="Meet the qualified medical team at HealthMed Hospital, Uyo. Experienced doctors in emergency care, family medicine, maternity, surgery, paediatrics and mental health."/>
+  <meta name="keywords" content="HealthMed Hospital doctors, Uyo doctors, Akwa Ibom doctors, hospital staff Uyo"/>
+  <meta property="og:title" content="Our Doctors — HealthMed Hospital"/>
+  <meta property="og:description" content="Meet the qualified medical team delivering 24-hour healthcare in Uyo, Akwa Ibom."/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .doctors-main { padding-block: var(--section-pad); }
+
+    /* Doctor grid */
+    .doctors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .doctor-card {
+      background: var(--white);
+      border: 1.5px solid var(--grey-2);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+    }
+    .doctor-card:hover {
+      border-color: rgba(214,40,40,0.3);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Photo placeholder */
+    .doctor-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #eef2f8 0%, #dde6f0 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .doctor-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(214,40,40,0.06) 0%, transparent 60%);
+    }
+    .doctor-photo-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      border: 2px solid var(--grey-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      position: relative; z-index: 1;
+    }
+    .doctor-photo-avatar svg { width: 38px; height: 38px; color: var(--navy); }
+    .doctor-photo-hint {
+      font-size: 0.62rem;
+      color: var(--text-light);
+      font-style: italic;
+      background: rgba(255,255,255,0.85);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      position: relative; z-index: 1;
+    }
+
+    /* Card body */
+    .doctor-body { padding: 1.5rem; }
+    .doctor-name {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--text-dark);
+      margin-bottom: 0.2rem;
+    }
+    .doctor-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+    .doctor-spec {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+    .spec-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.7rem;
+      border-radius: 99px;
+      background: var(--navy-light);
+      color: var(--navy);
+    }
+    .spec-tag.red { background: var(--red-light); color: var(--red); }
+    .doctor-bio {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .doctor-actions {
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    /* Team intro */
+    .team-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .team-stat-row {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .team-stat-num {
+      font-family: var(--font-impact);
+      font-size: 2.8rem;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .team-stat-num span { color: var(--red); }
+    .team-stat-lbl {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 0.3rem;
+    }
+    .team-values {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .team-value-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 1.2rem;
+      background: var(--off-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--grey-2);
+    }
+    .team-value-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--red-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .team-value-icon svg { width: 16px; height: 16px; color: var(--red); }
+    .team-value-text strong { display: block; font-size: 0.88rem; color: var(--text-dark); margin-bottom: 0.15rem; }
+    .team-value-text span   { font-size: 0.8rem; color: var(--text-light); }
+
+    @media (max-width: 840px) {
+      .team-intro { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pre-logo-3d">
+    <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"
+         style="width:110px;height:110px;object-fit:contain;filter:drop-shadow(2px 8px 18px rgba(214,40,40,0.45));"/>
+  </div>
+  <div class="pre-hospital-name">Health<span>Med</span> Hospital</div>
+  <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
+  <div class="pre-label" id="pre-label">Loading…</div>
+</div>
+<div id="progress-bar"></div>
+<button id="back-top" aria-label="Back to top">
+  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg>
+</button>
+
+<div class="top-banner">
+  <div class="top-banner-inner">
+    <p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p>
+    <div class="top-banner-right">
+      <a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a>
+      <a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
+    </div>
+  </div>
+</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">
+        <img src="assets/healthmed-logo.png" alt="HealthMed Hospital Logo" width="40" height="40" style="display:block;object-fit:contain;"/>
+      </div>
+      <div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="laboratory.html">Laboratory</a></li>
+      <li><a href="doctors.html" class="active">Our Doctors</a></li>
+      <li><a href="blog.html">Health Tips</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html"      onclick="closeMobile()">Home</a>
+  <a href="services.html"   onclick="closeMobile()">Services</a>
+  <a href="laboratory.html" onclick="closeMobile()">Laboratory</a>
+  <a href="doctors.html"    onclick="closeMobile()">Our Doctors</a>
+  <a href="blog.html"       onclick="closeMobile()">Health Tips</a>
+  <a href="about.html"      onclick="closeMobile()">About</a>
+  <a href="contact.html"    onclick="closeMobile()">Book Appointment</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-wm"><img src="assets/healthmed-logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:0.07;filter:brightness(10);"/></div>
+  <div class="container page-hero-inner">
+    <div class="page-hero-tag">The Team Behind Your Care</div>
+    <h1>Our Medical Team</h1>
+    <p>Qualified, experienced doctors and medical professionals dedicated to your health — available 24 hours a day at HealthMed Hospital, Uyo.</p>
+  </div>
+</div>
+
+<section class="doctors-main">
+  <div class="container">
+
+    <!-- Team intro -->
+    <div class="team-intro">
+      <div class="reveal-left">
+        <div class="section-tag">Who We Are</div>
+        <h2>Professionals you can <em>trust with your health.</em></h2>
+        <p style="margin-top:1rem;">Every member of our medical team is a licensed, qualified professional committed to delivering compassionate and effective healthcare. From emergency physicians to family doctors, our team covers every department — around the clock.</p>
+        <div class="team-stat-row">
+          <div><div class="team-stat-num">24<span>hr</span></div><div class="team-stat-lbl">On-Call Cover</div></div>
+          <div><div class="team-stat-num">8<span>+</span></div><div class="team-stat-lbl">Specialties</div></div>
+          <div><div class="team-stat-num">365</div><div class="team-stat-lbl">Days a Year</div></div>
+        </div>
+      </div>
+      <div class="team-values reveal-right">
+        <div class="team-value-item">
+          <div class="team-value-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><path d="M6 9l2 2 4-4"/></svg></div>
+          <div class="team-value-text"><strong>Licensed &amp; Registered</strong><span>All doctors are registered with the Medical and Dental Council of Nigeria (MDCN)</span></div>
+        </div>
+        <div class="team-value-item">
+          <div class="team-value-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 1v4M9 13v4M1 9h4M13 9h4"/><circle cx="9" cy="9" r="4"/></svg></div>
+          <div class="team-value-text"><strong>24/7 Availability</strong><span>At least one on-call doctor is available in every key department at all times</span></div>
+        </div>
+        <div class="team-value-item">
+          <div class="team-value-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM2 16c0-3 3-5 7-5s7 2 7 5"/></svg></div>
+          <div class="team-value-text"><strong>Patient-Centred Care</strong><span>Every consultation is private, unhurried, and focused entirely on your health needs</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doctors grid -->
+    <div class="section-tag reveal" style="margin-top:3rem;">Meet the Team</div>
+    <h2 class="reveal" style="transition-delay:0.1s;">Our Doctors</h2>
+    <p class="reveal" style="transition-delay:0.2s;margin-top:0.75rem;">Professional photos will be added here. Each doctor profile includes their specialty, qualifications, and a direct booking link.</p>
+
+    <div class="doctors-grid stagger">
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">Medical Director</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Emergency Medicine</span>
+            <span class="spec-tag">General Medicine</span>
+          </div>
+          <p class="doctor-bio">MBBS. Medical Director and Lead Emergency Physician at HealthMed Hospital. Extensive experience in emergency and critical care medicine across Akwa Ibom State.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">Obstetrician &amp; Gynaecologist</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Maternity</span>
+            <span class="spec-tag">Women's Health</span>
+          </div>
+          <p class="doctor-bio">MBBS, FWACS. Specialist in obstetrics and gynaecology with a focus on safe delivery, antenatal care, and maternal health outcomes.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">Paediatrician</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Child Health</span>
+            <span class="spec-tag">Neonatology</span>
+          </div>
+          <p class="doctor-bio">MBBS, DCH. Paediatric specialist caring for infants, children, and adolescents. Experienced in neonatal care and childhood illness management.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">General Surgeon</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Surgery</span>
+            <span class="spec-tag">Trauma</span>
+          </div>
+          <p class="doctor-bio">MBBS, FWACS (Surgery). General surgeon performing minor and major procedures with expertise in trauma, wound management, and elective surgery.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">Psychiatrist</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Mental Health</span>
+            <span class="spec-tag">Counselling</span>
+          </div>
+          <p class="doctor-bio">MBBS, FWACP (Psychiatry). Mental health specialist providing confidential psychiatric assessment, counselling, and medication management without stigma.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <div class="doctor-photo">
+          <div class="doctor-photo-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg></div>
+          <span class="doctor-photo-hint">Photo coming soon</span>
+        </div>
+        <div class="doctor-body">
+          <div class="doctor-name">Dr. [Name Surname]</div>
+          <div class="doctor-title">Family Physician</div>
+          <div class="doctor-spec">
+            <span class="spec-tag red">Family Medicine</span>
+            <span class="spec-tag">Chronic Disease</span>
+          </div>
+          <p class="doctor-bio">MBBS, FWACP (Family Medicine). Primary care physician managing routine health, chronic conditions, and preventive care for patients of all ages.</p>
+          <div class="doctor-actions">
+            <a href="contact.html" class="btn btn-red" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Book Consultation</a>
+            <a href="tel:+2347087445560" class="btn btn-outline" style="font-size:0.78rem;padding:0.55rem 1.1rem;">Call</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Join the team CTA -->
+    <div style="margin-top:4rem;padding:2.5rem 3rem;background:var(--navy);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;" class="reveal">
+      <div>
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.5rem;">Join Our Team</div>
+        <div style="font-family:var(--font-display);font-size:1.4rem;color:var(--white);margin-bottom:0.4rem;">Are you a qualified medical professional?</div>
+        <p style="font-size:0.88rem;color:rgba(255,255,255,0.6);max-width:50ch;">HealthMed Hospital is always looking for dedicated, qualified doctors and nurses to join our growing team in Uyo.</p>
+      </div>
+      <a href="mailto:HealthMed.hosp@gmail.com?subject=Career Enquiry" class="btn btn-white" style="flex-shrink:0;">Send Your CV</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="emergency-strip">
+  <div class="container">
+    <div class="emergency-inner reveal">
+      <div class="emergency-text"><strong>Medical Emergency? Don't Wait.</strong><span>Our emergency team is on standby 24 hours a day, every day.</span></div>
+      <div class="emergency-actions">
+        <a href="tel:+2347087445560" class="btn btn-white">+234 708 744 5560</a>
+        <a href="contact.html" class="btn btn-outline-white">Book Appointment</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <div class="footer-brand-mark"><img src="assets/healthmed-logo.png" alt="HealthMed" width="34" height="34" style="object-fit:contain;display:block;"/></div>
+          <div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div>
+        </div>
+        <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
+        <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
+      </div>
+      <div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="doctors.html">Our Doctors</a><a href="blog.html">Health Tips</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div>
+      <div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div>
+      <div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div>
+        <div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div>
+          <a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:#e63946;">+234 708 744 5560</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+<a href="tel:+2347087445560" class="float-call-btn" aria-label="Emergency Call">
+  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg>
+  <span class="float-call-label">Emergency</span>
+</a>
+</body>
+</html>
