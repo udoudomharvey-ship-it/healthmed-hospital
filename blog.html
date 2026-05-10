@@ -3,548 +3,242 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Health Tips &amp; Updates — HealthMed Hospital, Uyo</title>
-  <meta name="description" content="Health tips, medical advice, and hospital updates from HealthMed Hospital, Uyo. Expert guidance on malaria, maternal health, child care, nutrition and more."/>
-  <meta name="keywords" content="health tips Uyo, malaria prevention Nigeria, maternal health Akwa Ibom, HealthMed blog, hospital updates Uyo"/>
-  <meta property="og:title" content="Health Tips &amp; Updates — HealthMed Hospital"/>
-  <meta property="og:description" content="Expert health tips and medical advice from the team at HealthMed Hospital, Uyo, Akwa Ibom."/>
-  <meta property="og:type" content="website"/>
+  <title>Health News &amp; Updates — HealthMed Hospital, Uyo</title>
+  <meta name="description" content="Live health news and medical updates curated for HealthMed Hospital patients in Uyo, Akwa Ibom."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    .blog-main { padding-block: var(--section-pad); }
-
-    /* Category filter */
-    .blog-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin: 2.5rem 0;
-    }
-    .filter-btn {
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.45rem 1.1rem;
-      border-radius: 99px;
-      border: 1.5px solid var(--grey-2);
-      background: var(--white);
-      color: var(--text-mid);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--red);
-      border-color: var(--red);
-      color: var(--white);
-    }
-
-    /* Blog grid */
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .blog-card {
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s var(--ease-out), box-shadow 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-    .blog-card:hover {
-      border-color: rgba(214,40,40,0.3);
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Post image placeholder */
-    .blog-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #eef2f8, #dde6f0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.6rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .blog-img svg { width: 38px; height: 38px; color: var(--grey-2); }
-    .blog-img-label {
-      font-size: 0.62rem;
-      color: var(--text-light);
-      font-style: italic;
-      background: rgba(255,255,255,0.85);
-      padding: 0.18rem 0.5rem;
-      border-radius: 4px;
-    }
-    .blog-img-cat {
-      position: absolute;
-      top: 0.85rem;
-      left: 0.85rem;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.22rem 0.7rem;
-      border-radius: 99px;
-    }
-    .blog-img-cat.red   { background: var(--red);  color: var(--white); }
-    .blog-img-cat.navy  { background: var(--navy); color: var(--white); }
-    .blog-img-cat.cyan  { background: var(--cyan); color: var(--white); }
-
-    /* Post body */
-    .blog-body {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .blog-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 0.85rem;
-    }
-    .blog-date {
-      font-size: 0.74rem;
-      color: var(--text-light);
-    }
-    .blog-read {
-      font-size: 0.74rem;
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .blog-read svg { width: 13px; height: 13px; }
-    .blog-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--text-dark);
-      margin-bottom: 0.65rem;
-      line-height: 1.35;
-    }
-    .blog-excerpt {
-      font-size: 0.84rem;
-      color: var(--text-light);
-      line-height: 1.75;
-      flex: 1;
-      margin-bottom: 1.25rem;
-    }
-    .blog-author {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--grey-1);
-      margin-top: auto;
-    }
-    .author-avatar {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: var(--navy-light);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .author-avatar svg { width: 16px; height: 16px; color: var(--navy); }
-    .author-name  { font-size: 0.78rem; font-weight: 600; color: var(--text-dark); }
-    .author-role  { font-size: 0.7rem; color: var(--text-light); }
-
-    /* Featured post */
-    .blog-featured {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 0;
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 3rem;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .blog-featured:hover {
-      border-color: rgba(214,40,40,0.25);
-      box-shadow: var(--shadow-lg);
-    }
-    .blog-featured-img {
-      background: linear-gradient(135deg, #0f2057, #1a3a8f);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 3rem;
-      min-height: 320px;
-      position: relative;
-    }
-    .blog-featured-img svg { width: 64px; height: 64px; color: rgba(255,255,255,0.2); }
-    .blog-featured-img-label {
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.45);
-      font-style: italic;
-    }
-    .blog-featured-body {
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .featured-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.85rem;
-    }
-    .featured-badge::before {
-      content: '';
-      width: 16px; height: 2px;
-      background: var(--red);
-      border-radius: 99px;
-    }
-    .blog-featured-body .blog-title { font-size: 1.4rem; }
-    @media (max-width: 720px) {
-      .blog-featured { grid-template-columns: 1fr; }
-      .blog-featured-img { min-height: 200px; }
-    }
-
-    /* Newsletter */
-    .newsletter-strip {
-      background: var(--off-white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      margin-top: 4rem;
-    }
-    .newsletter-text strong { display: block; font-size: 1.15rem; color: var(--text-dark); margin-bottom: 0.4rem; }
-    .newsletter-text p { font-size: 0.88rem; color: var(--text-light); max-width: 40ch; }
-    .newsletter-form {
-      display: flex;
-      gap: 0.6rem;
-      flex: 1;
-      min-width: 260px;
-    }
-    .newsletter-form input {
-      flex: 1;
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .newsletter-form input:focus { border-color: var(--red); }
-    .newsletter-form input::placeholder { color: var(--text-light); }
+    .news-main{padding-block:var(--section-pad)}
+    .live-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:.85rem 1.25rem;background:var(--navy);border-radius:var(--radius-md);margin-bottom:2.5rem}
+    .live-indicator{display:flex;align-items:center;gap:.65rem;font-size:.78rem;font-weight:700;color:var(--white);letter-spacing:.08em;text-transform:uppercase}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#4caf50;box-shadow:0 0 0 3px rgba(76,175,80,.25);animation:livePulse 1.8s ease-in-out infinite}
+    @keyframes livePulse{0%,100%{box-shadow:0 0 0 3px rgba(76,175,80,.25)}50%{box-shadow:0 0 0 7px rgba(76,175,80,.08)}}
+    .live-source-tag{padding:.18rem .6rem;border-radius:99px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.65);font-size:.68rem;margin-left:.35rem}
+    .live-updated{font-size:.72rem;color:rgba(255,255,255,.4)}
+    .news-ticker-wrap{background:var(--red);overflow:hidden;padding:.5rem 0;margin-bottom:2rem;border-radius:var(--radius-sm)}
+    .news-ticker{display:flex;gap:4rem;animation:ticker 50s linear infinite;white-space:nowrap;width:max-content}
+    .news-ticker:hover{animation-play-state:paused}
+    .ticker-item{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:.5rem}
+    .ticker-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);flex-shrink:0}
+    @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .news-filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem}
+    .filter-btn{font-size:.78rem;font-weight:600;padding:.45rem 1.1rem;border-radius:99px;border:1.5px solid var(--grey-2);background:var(--white);color:var(--text-mid);cursor:pointer;transition:all .2s;font-family:var(--font-body)}
+    .filter-btn:hover,.filter-btn.active{background:var(--red);border-color:var(--red);color:var(--white)}
+    .news-featured{display:grid;grid-template-columns:1.4fr 1fr;border:1.5px solid var(--grey-2);border-radius:var(--radius-lg);overflow:hidden;background:var(--white);margin-bottom:2.5rem;transition:border-color .3s,box-shadow .3s;text-decoration:none}
+    .news-featured:hover{border-color:rgba(214,40,40,.3);box-shadow:var(--shadow-lg)}
+    .news-featured-img{width:100%;height:100%;min-height:280px;object-fit:cover;display:block;background:linear-gradient(135deg,#0f2057,#1a3a8f)}
+    .news-featured-img-ph{min-height:280px;background:linear-gradient(135deg,#0f2057,#1a3a8f);display:flex;align-items:center;justify-content:center}
+    .news-featured-img-ph svg{width:64px;height:64px;color:rgba(255,255,255,.15)}
+    .news-featured-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
+    .featured-tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.85rem}
+    .featured-tag::before{content:'';width:16px;height:2px;background:var(--red);border-radius:99px}
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.25rem}
+    .news-card{background:var(--white);border:1.5px solid var(--grey-2);border-radius:var(--radius-lg);overflow:hidden;transition:border-color .3s,transform .3s var(--ease-out),box-shadow .3s;display:flex;flex-direction:column;text-decoration:none}
+    .news-card:hover{border-color:rgba(214,40,40,.3);transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+    .news-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:linear-gradient(135deg,#eef2f8,#dde6f0)}
+    .news-card-img-ph{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#eef2f8,#dde6f0);display:flex;align-items:center;justify-content:center}
+    .news-card-img-ph svg{width:36px;height:36px;color:var(--grey-2)}
+    .news-card-body{padding:1.25rem;display:flex;flex-direction:column;flex:1}
+    .news-card-meta{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap}
+    .news-card-source{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+    .news-card-date{font-size:.72rem;color:var(--text-light)}
+    .news-card-title{font-family:var(--font-display);font-size:1rem;color:var(--text-dark);line-height:1.4;margin-bottom:.65rem}
+    .news-card-desc{font-size:.82rem;color:var(--text-light);line-height:1.7;flex:1;margin-bottom:1rem}
+    .news-card-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--red);margin-top:auto}
+    .news-card-link svg{width:13px;height:13px}
+    .sk-card{background:var(--white);border:1.5px solid var(--grey-2);border-radius:var(--radius-lg);overflow:hidden}
+    .sk-img{width:100%;aspect-ratio:16/9;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:sh 1.4s infinite}
+    .sk-body{padding:1.25rem}
+    .sk-line{height:12px;border-radius:6px;background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:sh 1.4s infinite;margin-bottom:.75rem}
+    .sk-line.s{width:40%}.sk-line.m{width:70%}.sk-line.f{width:100%}
+    @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .news-error{grid-column:1/-1;text-align:center;padding:3rem 2rem;color:var(--text-light)}
+    .news-error svg{width:48px;height:48px;color:var(--grey-2);margin:0 auto 1rem;display:block}
+    .news-error strong{display:block;color:var(--text-dark);margin-bottom:.5rem}
+    .load-more-wrap{text-align:center;margin-top:2.5rem}
+    @media(max-width:720px){.news-featured{grid-template-columns:1fr}.news-featured-img,.news-featured-img-ph{min-height:200px}}
   </style>
 </head>
 <body>
-
 <div id="preloader">
-  <div class="pre-logo-3d">
-    <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"
-         style="width:110px;height:110px;object-fit:contain;filter:drop-shadow(2px 8px 18px rgba(214,40,40,0.45));"/>
-  </div>
+  <div class="pre-logo-3d"><img src="assets/healthmed-logo.png" alt="HealthMed" style="width:110px;height:110px;object-fit:contain;filter:drop-shadow(2px 8px 18px rgba(214,40,40,.45));"/></div>
   <div class="pre-hospital-name">Health<span>Med</span> Hospital</div>
   <div class="pre-bar-track"><div class="pre-bar-fill" id="pre-bar"></div></div>
   <div class="pre-label" id="pre-label">Loading…</div>
 </div>
 <div id="progress-bar"></div>
-<button id="back-top" aria-label="Back to top">
-  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg>
-</button>
+<button id="back-top" aria-label="Back to top"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 14V4M4 8l5-5 5 5"/></svg></button>
 
-<div class="top-banner">
-  <div class="top-banner-inner">
-    <p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p>
-    <div class="top-banner-right">
-      <a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a>
-      <a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a>
-    </div>
-  </div>
-</div>
+<div class="top-banner"><div class="top-banner-inner"><p><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.24 2 3 4.24 3 7c0 4 5 9 5 9s5-5 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>9 Etim Okon Usanga Close, Off Nwaniba by Water Fountain, Uyo</p><div class="top-banner-right"><a href="mailto:HealthMed.hosp@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1 4l7 5 7-5"/></svg>HealthMed.hosp@gmail.com</a><a href="tel:+2347087445560" class="emergency-badge"><svg viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M13 9.5v2a1 1 0 0 1-1 1A12 12 0 0 1 1 1.5 1 1 0 0 1 2 .5h2a1 1 0 0 1 1 .8 5.5 5.5 0 0 0 .3 1.2.8.8 0 0 1-.2.9L4.1 4.4A9.6 9.6 0 0 0 9.6 9.9l.9-.9a.8.8 0 0 1 .9-.2 5.5 5.5 0 0 0 1.2.3 1 1 0 0 1 .8 1z"/></svg>+234 708 744 5560</a></div></div></div>
 
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="nav-logo-mark"><img src="assets/healthmed-logo.png" alt="HealthMed Hospital Logo" width="40" height="40" style="display:block;object-fit:contain;"/></div>
-      <div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="laboratory.html">Laboratory</a></li>
-      <li><a href="doctors.html">Our Doctors</a></li>
-      <li><a href="blog.html" class="active">Health Tips</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="portal.html">Patient Portal</a></li>
-      <li><a href="contact.html" class="nav-cta">Book Appointment</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="index.html" onclick="closeMobile()">Home</a>
-  <a href="services.html" onclick="closeMobile()">Services</a>
-  <a href="laboratory.html" onclick="closeMobile()">Laboratory</a>
-  <a href="doctors.html" onclick="closeMobile()">Our Doctors</a>
-  <a href="blog.html" onclick="closeMobile()">Health Tips</a>
-  <a href="about.html" onclick="closeMobile()">About</a>
-  <a href="portal.html" onclick="closeMobile()">Patient Portal</a>
-  <a href="contact.html" onclick="closeMobile()">Book Appointment</a>
-</div>
+<nav id="navbar"><div class="nav-inner"><a href="index.html" class="nav-logo"><div class="nav-logo-mark"><img src="assets/healthmed-logo.png" alt="HealthMed" width="40" height="40" style="display:block;object-fit:contain;"/></div><div class="nav-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · <span>RC1505282</span></em></div></a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="laboratory.html">Laboratory</a></li><li><a href="doctors.html">Our Doctors</a></li><li><a href="blog.html" class="active">Health News</a></li><li><a href="about.html">About</a></li><li><a href="portal.html">Patient Portal</a></li><li><a href="contact.html" class="nav-cta">Book Appointment</a></li></ul><button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div></nav>
+<div class="mobile-menu" id="mobile-menu"><a href="index.html" onclick="closeMobile()">Home</a><a href="services.html" onclick="closeMobile()">Services</a><a href="laboratory.html" onclick="closeMobile()">Laboratory</a><a href="doctors.html" onclick="closeMobile()">Our Doctors</a><a href="blog.html" onclick="closeMobile()">Health News</a><a href="about.html" onclick="closeMobile()">About</a><a href="portal.html" onclick="closeMobile()">Patient Portal</a><a href="contact.html" onclick="closeMobile()">Book Appointment</a></div>
 
 <div class="page-hero">
-  <div class="page-hero-wm"><img src="assets/healthmed-logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:0.07;filter:brightness(10);"/></div>
+  <div class="page-hero-wm"><img src="assets/healthmed-logo.png" alt="" style="width:100%;height:100%;object-fit:contain;opacity:.07;filter:brightness(10);"/></div>
   <div class="container page-hero-inner">
-    <div class="page-hero-tag">Expert Health Guidance</div>
-    <h1>Health Tips &amp; Updates</h1>
-    <p>Trusted health advice, preventive care tips, and hospital updates from the medical team at HealthMed Hospital, Uyo.</p>
+    <div class="page-hero-tag">Live Health Intelligence</div>
+    <h1>Health News &amp; Updates</h1>
+    <p>Real-time health news from WHO, BBC Health, and trusted global medical sources — updated automatically every 10 minutes.</p>
   </div>
 </div>
 
-<section class="blog-main">
+<section class="news-main">
   <div class="container">
 
-    <!-- Featured post -->
-    <div class="section-tag reveal">Featured Article</div>
-    <div class="blog-featured reveal" style="transition-delay:0.1s;">
-      <div class="blog-featured-img">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C8 7 5 10 5 14a7 7 0 0 0 14 0c0-4-3-7-7-12z"/></svg>
-        <span class="blog-featured-img-label">Featured image coming soon</span>
+    <div class="live-bar">
+      <div class="live-indicator"><span class="live-dot"></span>Live Health Feed</div>
+      <div>
+        <span class="live-source-tag">WHO</span>
+        <span class="live-source-tag">BBC Health</span>
+        <span class="live-source-tag">Medical News Today</span>
       </div>
-      <div class="blog-featured-body">
-        <div class="featured-badge">Featured</div>
-        <div class="blog-title">Malaria Prevention in Uyo: What Every Family Needs to Know</div>
-        <div class="blog-meta" style="margin-top:0.75rem;">
-          <span class="blog-date">May 2025</span>
-          <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>5 min read</span>
-        </div>
-        <p class="blog-excerpt">Malaria remains one of the most common causes of fever and hospitalisation in Akwa Ibom State. Learn the most effective prevention strategies, early warning signs, and when to come to the hospital — from our medical team.</p>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:auto;">
-          <a href="contact.html" class="btn btn-red" style="font-size:0.82rem;padding:0.6rem 1.3rem;">Book a Malaria Test</a>
-          <a href="laboratory.html" class="btn btn-outline" style="font-size:0.82rem;padding:0.6rem 1.3rem;">View Lab Tests</a>
-        </div>
+      <div class="live-updated" id="last-updated">Updating…</div>
+    </div>
+
+    <div class="news-ticker-wrap">
+      <div class="news-ticker" id="news-ticker">
+        <span class="ticker-item"><span class="ticker-dot"></span>Loading latest health headlines…</span>
+        <span class="ticker-item"><span class="ticker-dot"></span>Loading latest health headlines…</span>
       </div>
     </div>
 
-    <!-- Filters -->
-    <div class="blog-filters reveal">
-      <button class="filter-btn active">All</button>
-      <button class="filter-btn">Maternal Health</button>
-      <button class="filter-btn">Child Health</button>
-      <button class="filter-btn">Malaria &amp; Infections</button>
-      <button class="filter-btn">Mental Health</button>
-      <button class="filter-btn">Nutrition</button>
-      <button class="filter-btn">Hospital Updates</button>
+    <div class="news-filters">
+      <button class="filter-btn active" data-cat="all">All News</button>
+      <button class="filter-btn" data-cat="general">General Health</button>
+      <button class="filter-btn" data-cat="maternal">Maternal &amp; Child</button>
+      <button class="filter-btn" data-cat="disease">Infectious Disease</button>
+      <button class="filter-btn" data-cat="mental">Mental Health</button>
+      <button class="filter-btn" data-cat="nutrition">Nutrition</button>
     </div>
 
-    <!-- Posts grid -->
-    <div class="blog-grid stagger">
+    <div id="featured-wrap"></div>
 
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat navy">Maternal Health</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">April 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>4 min read</span>
-          </div>
-          <div class="blog-title">5 Signs You Should Start Antenatal Care Immediately</div>
-          <p class="blog-excerpt">Early antenatal care dramatically improves outcomes for both mother and baby. Our obstetrician explains the key signs that mean you should book your first appointment today.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">Dr. [Obstetrician]</div><div class="author-role">Maternity Specialist</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat cyan">Child Health</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">April 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>3 min read</span>
-          </div>
-          <div class="blog-title">Your Child's Vaccination Schedule: A Complete Guide for Nigerian Parents</div>
-          <p class="blog-excerpt">Immunisation is the single most effective way to protect your child from life-threatening diseases. Here is a clear breakdown of the full NPI schedule and what each vaccine does.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">Dr. [Paediatrician]</div><div class="author-role">Child Health Specialist</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat red">Mental Health</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2a8 8 0 0 1 8 8c0 5-6 12-8 12S4 15 4 10a8 8 0 0 1 8-8z"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">March 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>6 min read</span>
-          </div>
-          <div class="blog-title">Breaking the Silence: Understanding Depression in Nigeria</div>
-          <p class="blog-excerpt">Mental illness is more common than most people realise — and more treatable than most people believe. Our psychiatrist discusses what depression looks like, and how to get help without stigma.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">Dr. [Psychiatrist]</div><div class="author-role">Mental Health Specialist</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat navy">Nutrition</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2C8 7 5 10 5 14a7 7 0 0 0 14 0c0-4-3-7-7-12z"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">March 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>4 min read</span>
-          </div>
-          <div class="blog-title">Eating Well on a Budget: Nutrition Tips for Families in Uyo</div>
-          <p class="blog-excerpt">Good nutrition doesn't have to be expensive. Our doctor shares practical, affordable ways to ensure your family gets the vitamins, protein, and nutrients they need every day.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">Dr. [Family Physician]</div><div class="author-role">Family Medicine</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat red">Malaria &amp; Infections</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">February 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>3 min read</span>
-          </div>
-          <div class="blog-title">Typhoid vs Malaria: How to Tell the Difference</div>
-          <p class="blog-excerpt">Both typhoid and malaria cause fever — but they need different treatments. Never self-medicate. Here is how to tell them apart and why testing at our onsite lab is the safest first step.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">Dr. [Emergency Physician]</div><div class="author-role">Emergency Medicine</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <span class="blog-img-cat cyan">Hospital Updates</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          <span class="blog-img-label">Image coming soon</span>
-        </div>
-        <div class="blog-body">
-          <div class="blog-meta">
-            <span class="blog-date">January 2025</span>
-            <span class="blog-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>2 min read</span>
-          </div>
-          <div class="blog-title">HealthMed Hospital: New Equipment and Services in 2025</div>
-          <p class="blog-excerpt">We are proud to announce new additions to our facility — upgraded patient monitoring equipment, expanded laboratory capabilities, and strengthened maternity ward support for the Uyo community.</p>
-          <div class="blog-author">
-            <div class="author-avatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-            <div><div class="author-name">HealthMed Hospital</div><div class="author-role">Hospital Management</div></div>
-          </div>
-        </div>
-      </div>
-
+    <div class="news-grid" id="news-grid">
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-line s"></div><div class="sk-line f"></div><div class="sk-line m"></div><div class="sk-line f"></div></div></div>
     </div>
 
-    <!-- Newsletter signup -->
-    <div class="newsletter-strip reveal">
-      <div class="newsletter-text">
-        <strong>Get health tips in your inbox</strong>
-        <p>Monthly health advice from our doctors — no spam, just useful information for you and your family.</p>
-      </div>
-      <div class="newsletter-form">
-        <input type="email" placeholder="your@email.com" aria-label="Email address"/>
-        <button class="btn btn-red" type="button">Subscribe</button>
-      </div>
+    <div class="load-more-wrap">
+      <button class="btn btn-outline" id="load-more-btn" style="display:none" onclick="loadMore()">Load More Articles</button>
     </div>
 
   </div>
 </section>
 
-<div class="emergency-strip">
-  <div class="container">
-    <div class="emergency-inner reveal">
-      <div class="emergency-text"><strong>Medical Emergency? Don't Wait.</strong><span>Our emergency team is on standby 24 hours a day, every day.</span></div>
-      <div class="emergency-actions">
-        <a href="tel:+2347087445560" class="btn btn-white">+234 708 744 5560</a>
-        <a href="contact.html" class="btn btn-outline-white">Book Appointment</a>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="emergency-strip"><div class="container"><div class="emergency-inner reveal"><div class="emergency-text"><strong>Medical Emergency? Don't Wait.</strong><span>Our emergency team is on standby 24 hours a day, every day.</span></div><div class="emergency-actions"><a href="tel:+2347087445560" class="btn btn-white">+234 708 744 5560</a><a href="contact.html" class="btn btn-outline-white">Book Appointment</a></div></div></div></div>
 
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <div class="footer-brand-row">
-          <div class="footer-brand-mark"><img src="assets/healthmed-logo.png" alt="HealthMed" width="34" height="34" style="object-fit:contain;display:block;"/></div>
-          <div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div>
-        </div>
-        <p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p>
-        <p style="margin-top:0.75rem;" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p>
-      </div>
-      <div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="doctors.html">Our Doctors</a><a href="blog.html">Health Tips</a><a href="about.html">About Us</a><a href="contact.html">Book Appointment</a></div></div>
-      <div class="footer-col"><h4>Recent Posts</h4><div class="footer-links"><a href="blog.html">Malaria Prevention in Uyo</a><a href="blog.html">Antenatal Care — 5 Signs</a><a href="blog.html">Child Vaccination Guide</a><a href="blog.html">Typhoid vs Malaria</a><a href="blog.html">Mental Health in Nigeria</a></div></div>
-      <div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div>
-        <div style="margin-top:1.25rem;padding:0.85rem 1rem;background:rgba(214,40,40,0.15);border-radius:8px;border:1px solid rgba(214,40,40,0.2);">
-          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#e63946;margin-bottom:0.3rem;">Emergency Line</div>
-          <a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:#e63946;">+234 708 744 5560</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p>
-      <p><a href="#">Privacy Policy</a></p>
-    </div>
-  </div>
-</footer>
+<footer><div class="container"><div class="footer-grid"><div class="footer-col"><div class="footer-brand-row"><div class="footer-brand-mark"><img src="assets/healthmed-logo.png" alt="HealthMed" width="34" height="34" style="object-fit:contain;display:block;"/></div><div class="footer-brand-name">Health<span>Med</span><br/>Hospital</div></div><p>Quality, compassionate healthcare for the Uyo community — available 24 hours a day, every day of the year.</p><p style="margin-top:.75rem" class="footer-reg">RC1505282 · Akwa Ibom State, Nigeria</p></div><div class="footer-col"><h4>Navigate</h4><div class="footer-links"><a href="index.html">Home</a><a href="services.html">Services</a><a href="laboratory.html">Laboratory</a><a href="doctors.html">Our Doctors</a><a href="blog.html">Health News</a><a href="about.html">About Us</a><a href="portal.html">Patient Portal</a><a href="contact.html">Book Appointment</a></div></div><div class="footer-col"><h4>Services</h4><div class="footer-links"><a href="services.html">Emergency Care</a><a href="services.html">Family Medicine</a><a href="services.html">Maternity</a><a href="services.html">Child Care</a><a href="services.html">General Surgery</a><a href="services.html">Pharmacy</a><a href="services.html">Mental Health</a></div></div><div class="footer-col"><h4>Contact</h4><div class="footer-links"><a href="tel:+2347087445560">+234 708 744 5560</a><a href="mailto:HealthMed.hosp@gmail.com">HealthMed.hosp@gmail.com</a><a href="contact.html">9 Etim Okon Usanga Close, Uyo</a></div><div style="margin-top:1.25rem;padding:.85rem 1rem;background:rgba(214,40,40,.15);border-radius:8px;border:1px solid rgba(214,40,40,.2)"><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#e63946;margin-bottom:.3rem">Emergency Line</div><a href="tel:+2347087445560" style="font-size:1.05rem;font-weight:700;color:#e63946">+234 708 744 5560</a></div></div></div><div class="footer-bottom"><p>© 2025 HealthMed Hospital · RC1505282 · Uyo, Akwa Ibom State, Nigeria</p><p><a href="#">Privacy Policy</a></p></div></div></footer>
+
 <script src="script.js"></script>
 <script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
+const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const SOURCES = [
+  { url:'https://feeds.bbci.co.uk/news/health/rss.xml',       name:'BBC Health' },
+  { url:'https://www.who.int/rss-feeds/news-english.xml',      name:'WHO' },
+  { url:'https://www.medicalnewstoday.com/rss',                name:'Medical News Today' },
+];
+const CATS = {
+  maternal: ['pregnan','maternal','birth','newborn','baby','infant','neonatal','antenatal','mother','maternity'],
+  disease:  ['malaria','typhoid','cholera','infection','virus','bacteria','epidemic','outbreak','covid','fever','hiv','hepatitis'],
+  mental:   ['mental','depression','anxiety','psychiatr','stress','wellbeing','psycholog'],
+  nutrition:['diet','nutrition','obesity','vitamin','food','eating','weight','diabetes'],
+};
+let all=[], shown=0, filter='all';
+const PAGE=6;
+
+function cat(t,d){
+  const s=(t+' '+d).toLowerCase();
+  for(const[k,ws]of Object.entries(CATS)) if(ws.some(w=>s.includes(w))) return k;
+  return 'general';
+}
+function ago(ds){
+  const d=Date.now()-new Date(ds).getTime(), m=Math.floor(d/60000), h=Math.floor(m/60), dy=Math.floor(h/24);
+  return m<60?`${m}m ago`:h<24?`${h}h ago`:`${dy}d ago`;
+}
+function strip(h){ return h?(h.replace(/<[^>]*>/g,'').replace(/&[^;]+;/g,' ').trim()):''; }
+
+function card(a){
+  const desc=strip(a.description||'').substring(0,155);
+  const img=a.thumbnail||a.enclosure?.link||'';
+  const imgEl=img
+    ?`<img class="news-card-img" src="${img}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=news-card-img-ph><svg viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\"><rect x=\\"3\\" y=\\"3\\" width=\\"18\\" height=\\"18\\" rx=\\"2\\"/></svg></div>'"/>`
+    :`<div class="news-card-img-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>`;
+  return `<a class="news-card" href="${a.link}" target="_blank" rel="noopener noreferrer">${imgEl}<div class="news-card-body"><div class="news-card-meta"><span class="news-card-source">${a._src}</span><span class="news-card-date">${a.pubDate?ago(a.pubDate):''}</span></div><div class="news-card-title">${a.title}</div>${desc?`<p class="news-card-desc">${desc}…</p>`:''}<span class="news-card-link">Read full article <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 7h12M7 1l6 6-6 6"/></svg></span></div></a>`;
+}
+
+function featured(a){
+  const desc=strip(a.description||'').substring(0,260);
+  const img=a.thumbnail||a.enclosure?.link||'';
+  const imgEl=img
+    ?`<img class="news-featured-img" src="${img}" alt="" onerror="this.outerHTML='<div class=news-featured-img-ph><svg viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"0.8\\"><rect x=\\"3\\" y=\\"3\\" width=\\"18\\" height=\\"18\\" rx=\\"2\\"/></svg></div>'"/>`
+    :`<div class="news-featured-img-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>`;
+  document.getElementById('featured-wrap').innerHTML=`<a class="news-featured" href="${a.link}" target="_blank" rel="noopener noreferrer">${imgEl}<div class="news-featured-body"><div class="featured-tag">Top Story · ${a._src}</div><div class="news-card-title" style="font-size:1.35rem;margin-bottom:.85rem">${a.title}</div>${desc?`<p class="news-card-desc">${desc}…</p>`:''}<div style="margin-top:1.25rem"><span class="btn btn-red" style="font-size:.82rem;padding:.6rem 1.3rem;pointer-events:none">Read Article</span></div></div></a>`;
+}
+
+function render(){
+  const grid=document.getElementById('news-grid');
+  const fil=filter==='all'?all:all.filter(a=>a._cat===filter);
+  if(!fil.length){
+    grid.innerHTML=`<div class="news-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 16h.01"/></svg><strong>No articles in this category yet</strong>Try a different filter or check back soon.</div>`;
+    document.getElementById('load-more-btn').style.display='none';
+    return;
+  }
+  grid.innerHTML=fil.slice(0,shown).map(card).join('');
+  document.getElementById('load-more-btn').style.display=shown<fil.length?'inline-flex':'none';
+}
+
+window.loadMore=()=>{ shown+=PAGE; render(); };
+
+function ticker(articles){
+  const items=articles.slice(0,14).map(a=>`<span class="ticker-item"><span class="ticker-dot"></span>${a.title}</span>`).join('');
+  document.getElementById('news-ticker').innerHTML=items+items;
+}
+
+async function fetchFeed(src){
+  const r=await fetch(`${RSS_API}${encodeURIComponent(src.url)}&count=15`);
+  const d=await r.json();
+  if(d.status!=='ok') return [];
+  return(d.items||[]).map(i=>({...i,_src:src.name,_cat:cat(i.title,i.description)}));
+}
+
+async function load(){
+  try{
+    const res=await Promise.allSettled(SOURCES.map(fetchFeed));
+    const items=res.filter(r=>r.status==='fulfilled').flatMap(r=>r.value).filter(a=>a.title&&a.link);
+    items.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
+    all=items;
+    if(!all.length) throw new Error('empty');
+    featured(all[0]);
+    ticker(all);
+    shown=PAGE;
+    render();
+    document.getElementById('last-updated').textContent='Updated '+new Date().toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    document.getElementById('news-grid').innerHTML=`<div class="news-error"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 16h.01"/></svg><strong>Couldn't load live news right now</strong>This may be a temporary network issue. Please refresh the page.<br/><br/><a href="contact.html" class="btn btn-red" style="margin-top:.5rem">Contact Us Instead</a></div>`;
+    document.getElementById('last-updated').textContent='Feed unavailable';
+  }
+}
+
+document.querySelectorAll('.filter-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    filter=b.dataset.cat;
+    shown=PAGE;
+    render();
   });
+});
+
+load();
+setInterval(load,10*60*1000);
 </script>
-<a href="tel:+2347087445560" class="float-call-btn" aria-label="Emergency Call">
-  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg>
-  <span class="float-call-label">Emergency</span>
-</a>
+<a href="tel:+2347087445560" class="float-call-btn" aria-label="Emergency Call"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg><span class="float-call-label">Emergency</span></a>
 </body>
 </html>
