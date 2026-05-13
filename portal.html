@@ -4,707 +4,520 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Patient Portal — HealthMed Hospital</title>
-  <meta name="description" content="HealthMed Hospital secure patient portal. Log in to view your appointments and medical history."/>
   <meta name="robots" content="noindex, nofollow"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* ── AUTH SCREENS ── */
-    .auth-wrap {
-      min-height: 100dvh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --navy:#1060A0;--navy-light:#E3F2FD;--navy-dark:#0a3d6b;
+      --red:#D62828;--red-light:#fdecea;
+      --green:#2E7D32;--green-light:#e8f5e9;
+      --amber:#F57F17;--amber-light:#fff8e1;
+      --white:#ffffff;--off:#F5F9FC;--border:#DEE6EF;
+      --text:#0A1628;--muted:#6B7A8D;
+      --font:'DM Sans',sans-serif;
+      --r:12px;--r-lg:20px;
+      --sh:0 2px 12px rgba(16,96,160,.08);
+      --sh-md:0 8px 28px rgba(16,96,160,.12);
     }
-    .auth-left {
-      background: var(--navy);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .auth-left::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(214,40,40,0.12) 0%, transparent 70%);
-    }
-    .auth-left::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; left: -80px;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 70%);
-    }
-    .auth-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 3rem;
-      position: relative; z-index: 1;
-    }
-    .auth-brand img { width: 48px; height: 48px; object-fit: contain; }
-    .auth-brand-text strong { display: block; color: var(--white); font-size: 1.1rem; }
-    .auth-brand-text strong span { color: var(--red); }
-    .auth-brand-text em { font-size: 0.65rem; color: rgba(255,255,255,0.45); font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; }
-    .auth-headline {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      color: var(--white);
-      line-height: 1.2;
-      margin-bottom: 1.25rem;
-      position: relative; z-index: 1;
-    }
-    .auth-headline span { color: var(--red); font-style: italic; }
-    .auth-desc {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.8;
-      max-width: 38ch;
-      position: relative; z-index: 1;
-    }
-    .auth-features {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-top: 2.5rem;
-      position: relative; z-index: 1;
-    }
-    .auth-feature {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.84rem;
-      color: rgba(255,255,255,0.65);
-    }
-    .auth-feature-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--red);
-      flex-shrink: 0;
-    }
-    .auth-security {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 2.5rem;
-      padding: 0.85rem 1.1rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.45);
-      position: relative; z-index: 1;
-    }
-    .auth-security svg { width: 14px; height: 14px; color: var(--cyan); flex-shrink: 0; }
+    html{font-size:16px;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font);background:var(--off);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    button{font-family:var(--font);cursor:pointer}
+    input,select,textarea{font-family:var(--font)}
+    p{color:var(--muted);line-height:1.7}
 
-    /* ── AUTH RIGHT PANEL ── */
-    .auth-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem;
-      background: var(--white);
+    /* ── AUTH SCREEN ── */
+    #auth-screen{min-height:100dvh;display:grid;grid-template-columns:1fr 1fr}
+    .auth-left{
+      background:linear-gradient(145deg,var(--navy-dark) 0%,var(--navy) 100%);
+      display:flex;flex-direction:column;justify-content:center;
+      padding:4rem;position:relative;overflow:hidden;
     }
-    .auth-panel { max-width: 420px; width: 100%; margin: 0 auto; }
-    .auth-tabs {
-      display: flex;
-      background: var(--off-white);
-      border-radius: var(--radius-sm);
-      padding: 4px;
-      margin-bottom: 2.5rem;
-    }
-    .auth-tab {
-      flex: 1;
-      padding: 0.65rem;
-      text-align: center;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text-light);
-      border-radius: calc(var(--radius-sm) - 2px);
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      background: none;
-      font-family: var(--font-body);
-    }
-    .auth-tab.active {
-      background: var(--white);
-      color: var(--navy);
-      box-shadow: var(--shadow-sm);
-    }
-    .auth-form-title {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      color: var(--text-dark);
-      margin-bottom: 0.4rem;
-    }
-    .auth-form-sub {
-      font-size: 0.84rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-    }
+    .auth-left::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(214,40,40,.1)}
+    .auth-left::after{content:'';position:absolute;bottom:-60px;left:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.04)}
+    .auth-logo{display:flex;align-items:center;gap:.85rem;margin-bottom:3rem;position:relative;z-index:1}
+    .auth-logo img{width:52px;height:52px;object-fit:contain;filter:drop-shadow(2px 4px 10px rgba(214,40,40,.4))}
+    .auth-logo-text strong{display:block;color:white;font-size:1.1rem;font-weight:700}
+    .auth-logo-text strong span{color:var(--red)}
+    .auth-logo-text em{font-size:.65rem;color:rgba(255,255,255,.45);font-style:normal;letter-spacing:.1em;text-transform:uppercase}
+    .auth-headline{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:white;line-height:1.2;margin-bottom:1.25rem;position:relative;z-index:1}
+    .auth-headline em{color:var(--red);font-style:italic}
+    .auth-desc{font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.8;max-width:36ch;position:relative;z-index:1}
+    .auth-features{display:flex;flex-direction:column;gap:.75rem;margin-top:2.5rem;position:relative;z-index:1}
+    .auth-feat{display:flex;align-items:center;gap:.75rem;font-size:.84rem;color:rgba(255,255,255,.65)}
+    .auth-feat-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0}
+    .auth-security{display:flex;align-items:center;gap:.5rem;margin-top:2.5rem;padding:.85rem 1.1rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);font-size:.75rem;color:rgba(255,255,255,.45);position:relative;z-index:1}
+    .auth-security svg{width:14px;height:14px;color:#4fc3f7;flex-shrink:0}
 
-    /* Form fields */
-    .field { margin-bottom: 1.1rem; }
-    .field label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-bottom: 0.4rem;
-    }
-    .field input {
-      width: 100%;
-      background: var(--off-white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem 1rem;
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      color: var(--text-dark);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .field input:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(214,40,40,0.08);
-      background: var(--white);
-    }
-    .field input.error { border-color: var(--red); }
+    /* Auth right */
+    .auth-right{display:flex;flex-direction:column;justify-content:center;padding:4rem;background:white}
+    .auth-panel{max-width:420px;width:100%;margin:0 auto}
+    .auth-tabs{display:flex;background:var(--off);border-radius:calc(var(--r) - 2px);padding:4px;margin-bottom:2rem}
+    .auth-tab{flex:1;padding:.65rem;text-align:center;font-size:.84rem;font-weight:600;color:var(--muted);border-radius:calc(var(--r) - 4px);cursor:pointer;border:none;background:none;font-family:var(--font);transition:all .2s}
+    .auth-tab.active{background:white;color:var(--navy);box-shadow:var(--sh)}
+    .auth-title{font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:.35rem}
+    .auth-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.75rem}
+    .auth-err{background:#fdecea;border:1px solid rgba(214,40,40,.25);border-radius:var(--r);padding:.75rem 1rem;font-size:.82rem;color:var(--red);margin-bottom:1rem;display:none}
+    .auth-err.show{display:block}
 
-    .auth-submit {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      margin-top: 0.5rem;
-    }
-    .auth-submit:hover { background: var(--red-mid); transform: translateY(-1px); }
-    .auth-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    /* Fields */
+    .field{margin-bottom:1rem}
+    .field label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.38rem}
+    .field input,.field select{width:100%;background:var(--off);border:1.5px solid var(--border);border-radius:var(--r);padding:.82rem 1rem;font-size:.9rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+    .field input:focus,.field select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(16,96,160,.08);background:white}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+    .forgot{text-align:right;margin-top:-.5rem;margin-bottom:.85rem}
+    .forgot a{font-size:.78rem;color:var(--red);cursor:pointer;text-decoration:underline}
+    .auth-btn{width:100%;padding:.9rem;background:var(--navy);color:white;border:none;border-radius:var(--r);font-size:.92rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;margin-top:.25rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+    .auth-btn:hover{background:var(--navy-dark);transform:translateY(-1px)}
+    .auth-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .auth-or{text-align:center;margin:1.25rem 0;font-size:.78rem;color:var(--muted);position:relative}
+    .auth-or::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border)}
+    .auth-or span{background:white;padding:0 .85rem;position:relative}
+    .alt-btn{width:100%;padding:.75rem;background:none;color:var(--navy);border:1.5px solid var(--navy);border-radius:var(--r);font-size:.88rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .2s}
+    .alt-btn:hover{background:var(--navy-light)}
+    .spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    .auth-error {
-      background: #fdecea;
-      border: 1px solid rgba(214,40,40,0.25);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      font-size: 0.82rem;
-      color: var(--red);
-      margin-bottom: 1rem;
-      display: none;
-    }
-    .auth-error.show { display: block; }
+    /* Modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center}
+    .modal.show{display:flex}
+    .modal-box{background:white;border-radius:var(--r-lg);padding:2.5rem;width:100%;max-width:420px;margin:1rem}
+    .modal-title{font-size:1.3rem;font-weight:700;margin-bottom:.5rem}
+    .modal-sub{font-size:.84rem;color:var(--muted);margin-bottom:1.5rem}
+    .modal-actions{display:flex;gap:.75rem;margin-top:1.25rem}
+    .modal-cancel{flex:1;padding:.75rem;background:var(--off);border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--font);font-size:.88rem;font-weight:600;cursor:pointer;color:var(--text)}
+    .modal-send{flex:1;padding:.75rem;background:var(--navy);color:white;border:none;border-radius:var(--r);font-family:var(--font);font-size:.88rem;font-weight:700;cursor:pointer}
 
-    .auth-divider {
-      text-align: center;
-      margin: 1.5rem 0;
-      position: relative;
-      font-size: 0.78rem;
-      color: var(--text-light);
-    }
-    .auth-divider::before {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; top: 50%;
-      height: 1px;
-      background: var(--grey-2);
-    }
-    .auth-divider span { background: var(--white); padding: 0 0.85rem; position: relative; }
+    /* ══════════════════
+       DASHBOARD
+    ══════════════════ */
+    #dashboard{display:none;min-height:100dvh;background:var(--off)}
 
-    .forgot-link {
-      text-align: right;
-      margin-top: -0.5rem;
-      margin-bottom: 1.1rem;
+    /* Sticky header */
+    .dash-header{
+      background:white;border-bottom:1px solid var(--border);
+      position:sticky;top:0;z-index:200;box-shadow:var(--sh);
     }
-    .forgot-link a {
-      font-size: 0.78rem;
-      color: var(--red);
-      text-decoration: underline;
-      cursor: pointer;
-    }
+    .dash-header-inner{max-width:1160px;margin:0 auto;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .dash-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+    .dash-brand img{width:36px;height:36px;object-fit:contain;filter:drop-shadow(1px 3px 6px rgba(214,40,40,.35))}
+    .dash-brand-text strong{display:block;font-size:.95rem;font-weight:700;color:var(--navy)}
+    .dash-brand-text strong span{color:var(--red)}
+    .dash-brand-text em{display:block;font-size:.6rem;color:var(--muted);font-style:normal;letter-spacing:.08em;text-transform:uppercase}
+    .dash-header-right{display:flex;align-items:center;gap:1rem}
+    .dash-notif-btn{width:38px;height:38px;border-radius:50%;background:var(--off);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .2s}
+    .dash-notif-btn:hover{border-color:var(--navy);background:var(--navy-light)}
+    .dash-notif-btn svg{width:18px;height:18px;color:var(--muted)}
+    .notif-badge{position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--red);border:2px solid white;display:none}
+    .notif-badge.show{display:block}
+    .dash-user{display:flex;align-items:center;gap:.65rem}
+    .dash-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;color:white;flex-shrink:0}
+    .dash-username{font-size:.86rem;font-weight:600;color:var(--text)}
+    .dash-logout{font-size:.78rem;color:var(--muted);cursor:pointer;padding:.38rem .85rem;border:1px solid var(--border);border-radius:99px;background:none;font-family:var(--font);transition:all .2s}
+    .dash-logout:hover{border-color:var(--red);color:var(--red)}
 
-    /* ── DASHBOARD ── */
-    #dashboard { display: none; min-height: 100dvh; background: var(--off-white); }
-    .dash-nav {
-      background: var(--white);
-      border-bottom: 1px solid var(--grey-2);
-      padding: 0 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--shadow-sm);
-    }
-    .dash-nav-inner {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .dash-brand { display: flex; align-items: center; gap: 0.75rem; }
-    .dash-brand img { width: 36px; height: 36px; object-fit: contain; }
-    .dash-brand strong { font-size: 0.95rem; color: var(--navy); }
-    .dash-brand strong span { color: var(--red); }
-    .dash-brand em { display: block; font-size: 0.62rem; color: var(--text-light); font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; }
-    .dash-user-row { display: flex; align-items: center; gap: 1rem; }
-    .dash-user-name { font-size: 0.84rem; font-weight: 600; color: var(--text-dark); }
-    .dash-logout {
-      font-size: 0.78rem;
-      color: var(--text-light);
-      cursor: pointer;
-      padding: 0.4rem 0.85rem;
-      border: 1px solid var(--grey-2);
-      border-radius: var(--radius-sm);
-      background: none;
-      font-family: var(--font-body);
-      transition: all 0.2s;
-    }
-    .dash-logout:hover { border-color: var(--red); color: var(--red); }
+    /* Main layout */
+    .dash-body{max-width:1160px;margin:0 auto;padding:2rem 2rem 5rem}
 
-    /* Dashboard body */
-    .dash-body { max-width: 1160px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
-    .dash-welcome {
-      margin-bottom: 2.5rem;
+    /* Welcome panel */
+    .welcome-panel{
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dark) 100%);
+      border-radius:var(--r-lg);padding:2rem 2.5rem;
+      display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;
+      margin-bottom:2rem;position:relative;overflow:hidden;
     }
-    .dash-welcome h1 {
-      font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      color: var(--text-dark);
-      margin-bottom: 0.35rem;
-    }
-    .dash-welcome p { font-size: 0.88rem; color: var(--text-light); }
+    .welcome-panel::before{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04)}
+    .welcome-greeting{font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:700;color:white;margin-bottom:.35rem}
+    .welcome-greeting span{color:rgba(255,255,255,.6);font-size:.82rem;font-weight:400;display:block;margin-bottom:.25rem}
+    .welcome-next{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:var(--r);padding:1rem 1.5rem;text-align:center;min-width:180px}
+    .welcome-next-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem}
+    .welcome-next-val{font-size:.95rem;font-weight:600;color:white;line-height:1.4}
+    .welcome-alerts{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1rem}
+    .walert{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:600;padding:.3rem .8rem;border-radius:99px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8)}
+    .walert svg{width:13px;height:13px}
 
-    /* Stats row */
-    .dash-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.1rem;
-      margin-bottom: 2.5rem;
-    }
-    .dash-stat {
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .dash-stat-icon {
-      width: 44px; height: 44px;
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .dash-stat-icon svg { width: 20px; height: 20px; }
-    .dash-stat-icon.red   { background: var(--red-light); }  .dash-stat-icon.red svg   { color: var(--red); }
-    .dash-stat-icon.navy  { background: var(--navy-light); } .dash-stat-icon.navy svg  { color: var(--navy); }
-    .dash-stat-icon.cyan  { background: var(--cyan-light); } .dash-stat-icon.cyan svg  { color: var(--cyan-mid); }
-    .dash-stat-num { font-family: var(--font-impact); font-size: 2rem; color: var(--text-dark); line-height: 1; }
-    .dash-stat-lbl { font-size: 0.74rem; color: var(--text-light); margin-top: 0.25rem; }
+    /* Stats */
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:2rem}
+    .stat-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;box-shadow:var(--sh)}
+    .stat-icon{width:44px;height:44px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .stat-icon svg{width:20px;height:20px}
+    .stat-icon.blue{background:var(--navy-light)} .stat-icon.blue svg{color:var(--navy)}
+    .stat-icon.green{background:var(--green-light)} .stat-icon.green svg{color:var(--green)}
+    .stat-icon.amber{background:var(--amber-light)} .stat-icon.amber svg{color:var(--amber)}
+    .stat-num{font-size:2rem;font-weight:700;color:var(--text);line-height:1}
+    .stat-lbl{font-size:.74rem;color:var(--muted);margin-top:.2rem}
 
-    /* Two column layout */
-    .dash-grid { display: grid; grid-template-columns: 1fr 360px; gap: 1.5rem; }
+    /* Main grid */
+    .dash-grid{display:grid;grid-template-columns:1fr 340px;gap:1.5rem}
+
+    /* Quick action cards */
+    .quick-actions{margin-bottom:1.5rem}
+    .qa-title{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+    .qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+    .qa-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:1.25rem;display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;text-decoration:none}
+    .qa-card:hover{border-color:var(--navy);transform:translateY(-3px);box-shadow:var(--sh-md)}
+    .qa-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+    .qa-icon svg{width:22px;height:22px}
+    .qa-icon.blue{background:var(--navy-light)} .qa-icon.blue svg{color:var(--navy)}
+    .qa-icon.green{background:var(--green-light)} .qa-icon.green svg{color:var(--green)}
+    .qa-icon.amber{background:var(--amber-light)} .qa-icon.amber svg{color:var(--amber)}
+    .qa-icon.red{background:var(--red-light)} .qa-icon.red svg{color:var(--red)}
+    .qa-label{font-size:.8rem;font-weight:600;color:var(--text)}
+
+    /* Dashboard card */
+    .d-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);margin-bottom:1.5rem}
+    .d-card-head{padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .d-card-title{font-size:.9rem;font-weight:700;color:var(--text)}
+    .d-card-sub{font-size:.72rem;color:var(--muted)}
+    .d-card-body{padding:1.5rem}
 
     /* Appointments */
-    .dash-card {
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .dash-card-header {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--grey-1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .dash-card-title { font-size: 0.92rem; font-weight: 700; color: var(--text-dark); }
-    .dash-card-body { padding: 1.5rem; }
+    .appt-item{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+    .appt-item:last-child{border-bottom:none;padding-bottom:0}
+    .appt-date{width:50px;flex-shrink:0;background:var(--navy-light);border-radius:var(--r);padding:.5rem .25rem;text-align:center}
+    .appt-day{font-size:1.4rem;font-weight:700;color:var(--navy);line-height:1}
+    .appt-mon{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+    .appt-info{flex:1}
+    .appt-svc{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+    .appt-meta{font-size:.76rem;color:var(--muted)}
+    .appt-badge{margin-left:auto;flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .65rem;border-radius:99px;align-self:flex-start;white-space:nowrap}
+    .appt-badge.pending{background:var(--amber-light);color:var(--amber)}
+    .appt-badge.confirmed{background:var(--green-light);color:var(--green)}
+    .appt-badge.completed{background:var(--off);color:var(--muted)}
+    .appt-empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.88rem}
+    .appt-empty svg{width:44px;height:44px;color:var(--border);margin:0 auto 1rem;display:block}
 
-    /* Appointment item */
-    .appt-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--grey-1);
-    }
-    .appt-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .appt-date-box {
-      width: 52px; flex-shrink: 0;
-      background: var(--red-light);
-      border: 1.5px solid rgba(214,40,40,0.15);
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.25rem;
-      text-align: center;
-    }
-    .appt-day { font-family: var(--font-impact); font-size: 1.4rem; color: var(--red); line-height: 1; }
-    .appt-month { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
-    .appt-info-title { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.2rem; }
-    .appt-info-sub { font-size: 0.78rem; color: var(--text-light); }
-    .appt-badge {
-      margin-left: auto;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.22rem 0.65rem;
-      border-radius: 99px;
-    }
-    .appt-badge.pending   { background: #fff8e1; color: #f57f17; }
-    .appt-badge.confirmed { background: #e8f5e9; color: #2e7d32; }
-    .appt-badge.completed { background: var(--grey-1); color: var(--text-light); }
+    /* Records snapshot */
+    .record-item{display:flex;align-items:center;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
+    .record-item:last-child{border-bottom:none}
+    .record-icon{width:38px;height:38px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--off)}
+    .record-icon svg{width:17px;height:17px;color:var(--navy)}
+    .record-title{font-size:.86rem;font-weight:600;color:var(--text)}
+    .record-date{font-size:.75rem;color:var(--muted)}
+    .record-dl{margin-left:auto;font-size:.75rem;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:.3rem;flex-shrink:0}
+    .record-dl svg{width:13px;height:13px}
 
-    .appt-empty {
-      text-align: center;
-      padding: 2.5rem;
-      color: var(--text-light);
-      font-size: 0.88rem;
-    }
-    .appt-empty svg { width: 48px; height: 48px; color: var(--grey-2); margin: 0 auto 1rem; display: block; }
+    /* Notifications */
+    .notif-item{display:flex;gap:.85rem;padding:.85rem 0;border-bottom:1px solid var(--border);align-items:flex-start}
+    .notif-item:last-child{border-bottom:none}
+    .notif-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:.35rem}
+    .notif-dot.green{background:var(--green)}
+    .notif-dot.amber{background:var(--amber)}
+    .notif-dot.red{background:var(--red)}
+    .notif-dot.muted{background:var(--border)}
+    .notif-text{font-size:.84rem;color:var(--text);line-height:1.5}
+    .notif-time{font-size:.72rem;color:var(--muted);margin-top:.2rem}
 
-    /* Book appointment form in dashboard */
-    .book-field { margin-bottom: 1rem; }
-    .book-field label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.35rem; }
-    .book-field input,
-    .book-field select,
-    .book-field textarea {
-      width: 100%;
-      background: var(--off-white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 0.9rem;
-      font-family: var(--font-body);
-      font-size: 0.86rem;
-      color: var(--text-dark);
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-    }
-    .book-field input:focus,
-    .book-field select:focus,
-    .book-field textarea:focus { border-color: var(--red); }
-    .book-field textarea { resize: vertical; min-height: 80px; }
-    .book-submit {
-      width: 100%;
-      padding: 0.8rem;
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-body);
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 0.25rem;
-    }
-    .book-submit:hover { background: var(--red-mid); }
-    .book-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-    .book-success {
-      background: #e8f5e9;
-      border: 1px solid #a5d6a7;
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      font-size: 0.82rem;
-      color: #2e7d32;
-      margin-bottom: 1rem;
-      display: none;
-    }
-    .book-success.show { display: block; }
+    /* Profile */
+    .profile-card{background:white;border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);margin-bottom:1.5rem}
+    .profile-top{background:linear-gradient(135deg,var(--navy),var(--navy-dark));padding:1.75rem;text-align:center}
+    .p-avatar{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.15);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.4rem;font-weight:700;color:white}
+    .p-name{font-size:1.05rem;font-weight:700;color:white;margin-bottom:.25rem}
+    .p-email{font-size:.78rem;color:rgba(255,255,255,.55)}
+    .profile-details{padding:1.25rem}
+    .p-detail{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.83rem}
+    .p-detail:last-child{border-bottom:none}
+    .p-detail-label{color:var(--muted);font-weight:500}
+    .p-detail-val{font-weight:600;color:var(--text);text-align:right}
 
-    /* Profile card */
-    .profile-card {
-      background: var(--white);
-      border: 1.5px solid var(--grey-2);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .profile-avatar {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      background: var(--navy-light);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-    }
-    .profile-avatar svg { width: 30px; height: 30px; color: var(--navy); }
-    .profile-name { text-align: center; font-weight: 700; color: var(--text-dark); margin-bottom: 0.25rem; }
-    .profile-email { text-align: center; font-size: 0.78rem; color: var(--text-light); margin-bottom: 1.25rem; }
-    .profile-detail { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 0.55rem 0; border-bottom: 1px solid var(--grey-1); }
-    .profile-detail:last-child { border-bottom: none; }
-    .profile-detail span:first-child { color: var(--text-light); }
-    .profile-detail span:last-child { font-weight: 600; color: var(--text-dark); }
+    /* Book form in dashboard */
+    .book-success{background:var(--green-light);border:1px solid #a5d6a7;border-radius:var(--r);padding:.75rem 1rem;font-size:.82rem;color:var(--green);margin-bottom:1rem;display:none}
+    .book-success.show{display:block}
+    .book-field{margin-bottom:.9rem}
+    .book-field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+    .book-field select,.book-field input,.book-field textarea{width:100%;background:var(--off);border:1.5px solid var(--border);border-radius:var(--r);padding:.72rem .9rem;font-size:.86rem;color:var(--text);outline:none;font-family:var(--font);transition:border-color .2s;-webkit-appearance:none}
+    .book-field select:focus,.book-field input:focus,.book-field textarea:focus{border-color:var(--navy);background:white}
+    .book-field textarea{resize:vertical;min-height:75px}
+    .book-btn{width:100%;padding:.8rem;background:var(--navy);color:white;border:none;border-radius:var(--r);font-family:var(--font);font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s;margin-top:.25rem}
+    .book-btn:hover{background:var(--navy-dark)}
+    .book-btn:disabled{opacity:.6;cursor:not-allowed}
 
-    /* Loading spinner */
-    .spinner {
-      width: 20px; height: 20px;
-      border: 2.5px solid rgba(255,255,255,0.3);
-      border-top-color: var(--white);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Dash footer */
+    .dash-footer{background:white;border-top:1px solid var(--border);padding:1.5rem 2rem;margin-top:2rem}
+    .dash-footer-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .dash-footer-links{display:flex;gap:1.5rem}
+    .dash-footer-links a{font-size:.8rem;color:var(--muted);transition:color .2s}
+    .dash-footer-links a:hover{color:var(--navy)}
+    .dash-emergency{display:flex;align-items:center;gap:.65rem;font-size:.82rem;color:var(--red);font-weight:600}
+    .dash-emergency svg{width:16px;height:16px}
 
-    /* Reset password modal */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 9000;
-      display: none;
-      align-items: center;
-      justify-content: center;
+    @media(max-width:900px){
+      #auth-screen{grid-template-columns:1fr}
+      .auth-left{display:none}
+      .auth-right{padding:2.5rem 1.5rem}
+      .dash-grid{grid-template-columns:1fr}
+      .stats-row{grid-template-columns:1fr 1fr}
+      .qa-grid{grid-template-columns:repeat(3,1fr)}
+      .welcome-panel{grid-template-columns:1fr}
+      .welcome-next{min-width:auto}
+      .dash-body{padding:1.5rem 1rem 4rem}
+      .dash-header-inner{padding:.85rem 1rem}
+      .dash-username{display:none}
     }
-    .modal-overlay.show { display: flex; }
-    .modal-box {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 420px;
-      margin: 1rem;
-    }
-    .modal-title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 0.5rem; }
-    .modal-sub { font-size: 0.84rem; color: var(--text-light); margin-bottom: 1.5rem; }
-    .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
-
-    @media (max-width: 900px) {
-      .auth-wrap { grid-template-columns: 1fr; }
-      .auth-left { display: none; }
-      .auth-right { padding: 2rem 1.5rem; }
-      .dash-grid { grid-template-columns: 1fr; }
+    @media(max-width:480px){
+      .stats-row{grid-template-columns:1fr}
+      .qa-grid{grid-template-columns:repeat(2,1fr)}
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════
-     AUTH SCREEN
-══════════════════════ -->
+<!-- ═══════════════════ AUTH SCREEN ═══════════════════ -->
 <div id="auth-screen">
-  <div class="auth-wrap">
-
-    <!-- Left panel -->
-    <div class="auth-left">
-      <div class="auth-brand">
-        <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"/>
-        <div class="auth-brand-text">
-          <strong>Health<span>Med</span> Hospital</strong>
-          <em>Quality Healthcare · RC1505282</em>
-        </div>
-      </div>
-      <h1 class="auth-headline">Your health,<br/><span>your records.</span><br/>Secure &amp; private.</h1>
-      <p class="auth-desc">Access your appointments, medical history, and book new consultations — all in one secure, private portal.</p>
-      <div class="auth-features">
-        <div class="auth-feature"><span class="auth-feature-dot"></span>View upcoming and past appointments</div>
-        <div class="auth-feature"><span class="auth-feature-dot"></span>Book new consultations anytime</div>
-        <div class="auth-feature"><span class="auth-feature-dot"></span>Your data belongs only to you</div>
-        <div class="auth-feature"><span class="auth-feature-dot"></span>Protected by Firebase security</div>
-      </div>
-      <div class="auth-security">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Your data is encrypted and stored securely. Only you can access your records.
-      </div>
+  <div class="auth-left">
+    <div class="auth-logo">
+      <img src="assets/healthmed-logo.png" alt="HealthMed Hospital"/>
+      <div class="auth-logo-text"><strong>Health<span>Med</span> Hospital</strong><em>Quality Healthcare · RC1505282</em></div>
     </div>
+    <h1 class="auth-headline">Your health,<br/><em>your records.</em><br/>Safe &amp; private.</h1>
+    <p class="auth-desc">A calm, secure space to manage your appointments, view your health records, and connect with your care team.</p>
+    <div class="auth-features">
+      <div class="auth-feat"><span class="auth-feat-dot"></span>View upcoming and past appointments</div>
+      <div class="auth-feat"><span class="auth-feat-dot"></span>Book new consultations anytime</div>
+      <div class="auth-feat"><span class="auth-feat-dot"></span>Your data belongs only to you</div>
+      <div class="auth-feat"><span class="auth-feat-dot"></span>Protected by Firebase encryption</div>
+    </div>
+    <div class="auth-security">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Data is encrypted and stored securely. Only you can access your records.
+    </div>
+  </div>
 
-    <!-- Right panel -->
-    <div class="auth-right">
-      <div class="auth-panel">
+  <div class="auth-right">
+    <div class="auth-panel">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+        <button class="auth-tab" id="tab-reg" onclick="switchTab('register')">Create Account</button>
+      </div>
+      <div class="auth-err" id="auth-err"></div>
 
-        <!-- Tabs -->
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
-          <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+      <!-- LOGIN -->
+      <div id="form-login">
+        <div class="auth-title">Welcome back</div>
+        <p class="auth-sub">Log in to access your patient portal.</p>
+        <div class="field"><label>Email Address</label><input type="email" id="l-email" placeholder="you@email.com" autocomplete="email"/></div>
+        <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="Your password" autocomplete="current-password"/></div>
+        <div class="forgot"><a onclick="showReset()">Forgot password?</a></div>
+        <button class="auth-btn" id="login-btn" onclick="handleLogin()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+          Log In
+        </button>
+        <div class="auth-or"><span>New patient?</span></div>
+        <button class="alt-btn" onclick="switchTab('register')">Create an Account</button>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="form-reg" style="display:none">
+        <div class="auth-title">Create account</div>
+        <p class="auth-sub">Register to manage your appointments.</p>
+        <div class="field-row">
+          <div class="field"><label>First Name</label><input type="text" id="r-fn" placeholder="First name" autocomplete="given-name"/></div>
+          <div class="field"><label>Last Name</label><input type="text" id="r-ln" placeholder="Last name" autocomplete="family-name"/></div>
         </div>
-
-        <!-- Error message -->
-        <div class="auth-error" id="auth-error"></div>
-
-        <!-- LOGIN FORM -->
-        <div id="form-login">
-          <div class="auth-form-title">Welcome back</div>
-          <p class="auth-form-sub">Log in to access your patient portal.</p>
-          <div class="field">
-            <label>Email Address</label>
-            <input type="email" id="login-email" placeholder="you@email.com" autocomplete="email"/>
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input type="password" id="login-password" placeholder="Your password" autocomplete="current-password"/>
-          </div>
-          <div class="forgot-link"><a onclick="showReset()">Forgot password?</a></div>
-          <button class="auth-submit" id="login-btn" onclick="handleLogin()">Log In</button>
-          <div class="auth-divider"><span>New patient?</span></div>
-          <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="switchTab('register')">Create an Account</button>
-        </div>
-
-        <!-- REGISTER FORM -->
-        <div id="form-register" style="display:none;">
-          <div class="auth-form-title">Create account</div>
-          <p class="auth-form-sub">Register to manage your appointments and health records.</p>
-          <div class="form-row">
-            <div class="field">
-              <label>First Name</label>
-              <input type="text" id="reg-firstname" placeholder="First name" autocomplete="given-name"/>
-            </div>
-            <div class="field">
-              <label>Last Name</label>
-              <input type="text" id="reg-lastname" placeholder="Last name" autocomplete="family-name"/>
-            </div>
-          </div>
-          <div class="field">
-            <label>Phone Number</label>
-            <input type="tel" id="reg-phone" placeholder="+234 800 000 0000" autocomplete="tel"/>
-          </div>
-          <div class="field">
-            <label>Date of Birth</label>
-            <input type="date" id="reg-dob"/>
-          </div>
-          <div class="field">
-            <label>Email Address</label>
-            <input type="email" id="reg-email" placeholder="you@email.com" autocomplete="email"/>
-          </div>
-          <div class="field">
-            <label>Password</label>
-            <input type="password" id="reg-password" placeholder="Min. 8 characters" autocomplete="new-password"/>
-          </div>
-          <button class="auth-submit" id="register-btn" onclick="handleRegister()">Create Account</button>
-          <div class="auth-divider"><span>Already registered?</span></div>
-          <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="switchTab('login')">Log In Instead</button>
-        </div>
-
+        <div class="field"><label>Phone Number</label><input type="tel" id="r-phone" placeholder="07089401337" autocomplete="tel"/></div>
+        <div class="field"><label>Date of Birth</label><input type="date" id="r-dob"/></div>
+        <div class="field"><label>Email Address</label><input type="email" id="r-email" placeholder="you@email.com" autocomplete="email"/></div>
+        <div class="field"><label>Password (min 8 characters)</label><input type="password" id="r-pass" placeholder="Choose a strong password" autocomplete="new-password"/></div>
+        <button class="auth-btn" id="reg-btn" onclick="handleRegister()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          Create Account
+        </button>
+        <div class="auth-or"><span>Already registered?</span></div>
+        <button class="alt-btn" onclick="switchTab('login')">Log In Instead</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════
-     DASHBOARD
-══════════════════════ -->
+<!-- ═══════════════════ DASHBOARD ═══════════════════ -->
 <div id="dashboard">
 
-  <!-- Nav -->
-  <div class="dash-nav">
-    <div class="dash-nav-inner">
-      <div class="dash-brand">
+  <!-- HEADER -->
+  <div class="dash-header">
+    <div class="dash-header-inner">
+      <a href="index.html" class="dash-brand">
         <img src="assets/healthmed-logo.png" alt="HealthMed"/>
-        <div>
-          <strong>Health<span>Med</span> Hospital</strong>
-          <em>Patient Portal</em>
+        <div class="dash-brand-text"><strong>Health<span>Med</span> Hospital</strong><em>Patient Portal</em></div>
+      </a>
+      <div class="dash-header-right">
+        <button class="dash-notif-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge show" id="notif-badge"></span>
+        </button>
+        <div class="dash-user">
+          <div class="dash-avatar" id="dash-avatar">?</div>
+          <span class="dash-username" id="dash-username"></span>
         </div>
-      </div>
-      <div class="dash-user-row">
-        <span class="dash-user-name" id="dash-username"></span>
         <button class="dash-logout" onclick="handleLogout()">Log Out</button>
       </div>
     </div>
   </div>
 
-  <!-- Body -->
+  <!-- BODY -->
   <div class="dash-body">
 
-    <!-- Welcome -->
-    <div class="dash-welcome">
-      <h1 id="dash-greeting">Good morning</h1>
-      <p>Here's your health summary and upcoming appointments.</p>
-    </div>
-
-    <!-- Stats -->
-    <div class="dash-stats">
-      <div class="dash-stat">
-        <div class="dash-stat-icon red">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <!-- WELCOME PANEL -->
+    <div class="welcome-panel">
+      <div>
+        <div class="welcome-greeting">
+          <span id="dash-date"></span>
+          <span id="dash-greeting">Good morning</span>
         </div>
-        <div>
-          <div class="dash-stat-num" id="stat-total">—</div>
-          <div class="dash-stat-lbl">Total Appointments</div>
-        </div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-icon navy">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l3 3"/></svg>
-        </div>
-        <div>
-          <div class="dash-stat-num" id="stat-upcoming">—</div>
-          <div class="dash-stat-lbl">Upcoming</div>
+        <div class="welcome-alerts">
+          <span class="walert">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>
+            <span id="upcoming-count">— upcoming appointments</span>
+          </span>
+          <span class="walert">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg>
+            Portal active
+          </span>
         </div>
       </div>
-      <div class="dash-stat">
-        <div class="dash-stat-icon cyan">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-        </div>
-        <div>
-          <div class="dash-stat-num" id="stat-completed">—</div>
-          <div class="dash-stat-lbl">Completed</div>
-        </div>
+      <div class="welcome-next">
+        <div class="welcome-next-label">Next Appointment</div>
+        <div class="welcome-next-val" id="next-appt">No upcoming<br/>appointments</div>
       </div>
     </div>
 
-    <!-- Main grid -->
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div><div class="stat-num" id="stat-total">—</div><div class="stat-lbl">Total Appointments</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l3 3"/></svg></div>
+        <div><div class="stat-num" id="stat-upcoming">—</div><div class="stat-lbl">Upcoming</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+        <div><div class="stat-num" id="stat-done">—</div><div class="stat-lbl">Completed</div></div>
+      </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+      <div class="qa-title">Quick Actions</div>
+      <div class="qa-grid">
+        <a href="#book-section" class="qa-card">
+          <div class="qa-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/></svg></div>
+          <span class="qa-label">Book Appointment</span>
+        </a>
+        <a href="#records-section" class="qa-card">
+          <div class="qa-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <span class="qa-label">Medical Records</span>
+        </a>
+        <a href="laboratory.html" class="qa-card">
+          <div class="qa-icon amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3v11a3 3 0 0 0 6 0V3"/><path d="M6 3h12"/></svg></div>
+          <span class="qa-label">Lab Results</span>
+        </a>
+        <a href="contact.html" class="qa-card">
+          <div class="qa-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <span class="qa-label">Message Us</span>
+        </a>
+        <a href="services.html" class="qa-card">
+          <div class="qa-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8 10h8M8 14h5"/></svg></div>
+          <span class="qa-label">Prescriptions</span>
+        </a>
+        <a href="tel:07089401337" class="qa-card">
+          <div class="qa-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2L9 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 23 17z"/></svg></div>
+          <span class="qa-label">Emergency Call</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN GRID -->
     <div class="dash-grid">
 
-      <!-- Appointments list -->
+      <!-- LEFT -->
       <div>
-        <div class="dash-card">
-          <div class="dash-card-header">
-            <div class="dash-card-title">Your Appointments</div>
-            <span style="font-size:0.72rem;color:var(--text-light);">Most recent first</span>
+        <!-- Appointments -->
+        <div class="d-card">
+          <div class="d-card-head">
+            <div class="d-card-title">Your Appointments</div>
+            <span class="d-card-sub">Most recent first</span>
           </div>
-          <div class="dash-card-body" id="appointments-list">
-            <div class="appt-empty">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              Loading appointments…
+          <div class="d-card-body" id="appt-list">
+            <div class="appt-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Loading appointments…</div>
+          </div>
+        </div>
+
+        <!-- Records snapshot -->
+        <div class="d-card" id="records-section">
+          <div class="d-card-head">
+            <div class="d-card-title">Recent Medical Activity</div>
+            <span class="d-card-sub">Summary only</span>
+          </div>
+          <div class="d-card-body">
+            <div class="record-item">
+              <div class="record-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+              <div><div class="record-title">Last Visit Summary</div><div class="record-date" id="last-visit">No visits recorded yet</div></div>
+              <div class="record-dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF</div>
+            </div>
+            <div class="record-item">
+              <div class="record-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 3v11a3 3 0 0 0 6 0V3"/><path d="M6 3h12"/></svg></div>
+              <div><div class="record-title">Lab Results</div><div class="record-date">Visit your laboratory page for test history</div></div>
+              <a href="laboratory.html" class="record-dl">View</a>
+            </div>
+            <div class="record-item">
+              <div class="record-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+              <div><div class="record-title">Prescriptions</div><div class="record-date">Contact pharmacy or your doctor for details</div></div>
+              <a href="tel:07089401337" class="record-dl">Call</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="d-card">
+          <div class="d-card-head">
+            <div class="d-card-title">Notifications &amp; Alerts</div>
+            <span class="d-card-sub" id="notif-count"></span>
+          </div>
+          <div class="d-card-body" id="notif-list">
+            <div class="notif-item">
+              <span class="notif-dot green"></span>
+              <div><div class="notif-text">Welcome to the HealthMed Patient Portal. Book your first appointment using the form on the right.</div><div class="notif-time">Now</div></div>
+            </div>
+            <div class="notif-item">
+              <span class="notif-dot amber"></span>
+              <div><div class="notif-text">Emergency line available 24/7 — call 07089401337 if you need urgent assistance.</div><div class="notif-time">Always</div></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right column -->
+      <!-- RIGHT COLUMN -->
       <div>
-
-        <!-- Profile card -->
+        <!-- Profile -->
         <div class="profile-card">
-          <div class="profile-avatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="5"/><path d="M3 21c0-4 4-7 9-7s9 3 9 7"/></svg>
+          <div class="profile-top">
+            <div class="p-avatar" id="p-avatar">?</div>
+            <div class="p-name" id="p-name">—</div>
+            <div class="p-email" id="p-email">—</div>
           </div>
-          <div class="profile-name" id="profile-name">—</div>
-          <div class="profile-email" id="profile-email">—</div>
-          <div class="profile-detail"><span>Phone</span><span id="profile-phone">—</span></div>
-          <div class="profile-detail"><span>Date of Birth</span><span id="profile-dob">—</span></div>
-          <div class="profile-detail"><span>Patient Since</span><span id="profile-since">—</span></div>
+          <div class="profile-details">
+            <div class="p-detail"><span class="p-detail-label">Phone</span><span class="p-detail-val" id="p-phone">—</span></div>
+            <div class="p-detail"><span class="p-detail-label">Date of Birth</span><span class="p-detail-val" id="p-dob">—</span></div>
+            <div class="p-detail"><span class="p-detail-label">Patient Since</span><span class="p-detail-val" id="p-since">—</span></div>
+            <div class="p-detail"><span class="p-detail-label">Status</span><span class="p-detail-val" style="color:var(--green)">Active ✓</span></div>
+          </div>
         </div>
 
         <!-- Book appointment -->
-        <div class="dash-card">
-          <div class="dash-card-header">
-            <div class="dash-card-title">Book Appointment</div>
+        <div class="d-card" id="book-section">
+          <div class="d-card-head">
+            <div class="d-card-title">Book Appointment</div>
           </div>
-          <div class="dash-card-body">
-            <div class="book-success" id="book-success">
-              ✓ Appointment booked. We'll confirm via call within 2 hours.
-            </div>
+          <div class="d-card-body">
+            <div class="book-success" id="book-ok">✓ Booked! We'll confirm via call within 2 hours.</div>
             <div class="book-field">
               <label>Service</label>
-              <select id="book-service">
+              <select id="b-service">
                 <option value="">Select a service…</option>
                 <option>Emergency Care</option>
                 <option>Family Medicine</option>
@@ -719,57 +532,64 @@
             </div>
             <div class="book-field">
               <label>Preferred Date</label>
-              <input type="date" id="book-date"/>
+              <input type="date" id="b-date"/>
             </div>
             <div class="book-field">
               <label>Preferred Time</label>
-              <select id="book-time">
+              <select id="b-time">
                 <option value="">Select time…</option>
-                <option>8:00 AM</option>
-                <option>9:00 AM</option>
-                <option>10:00 AM</option>
-                <option>11:00 AM</option>
-                <option>12:00 PM</option>
-                <option>1:00 PM</option>
-                <option>2:00 PM</option>
-                <option>3:00 PM</option>
-                <option>4:00 PM</option>
-                <option>5:00 PM</option>
+                <option>8:00 AM</option><option>9:00 AM</option>
+                <option>10:00 AM</option><option>11:00 AM</option>
+                <option>12:00 PM</option><option>1:00 PM</option>
+                <option>2:00 PM</option><option>3:00 PM</option>
+                <option>4:00 PM</option><option>5:00 PM</option>
+                <option>Any time (24hr)</option>
               </select>
             </div>
             <div class="book-field">
               <label>Notes (optional)</label>
-              <textarea id="book-notes" placeholder="Briefly describe your symptoms or reason for visit…"></textarea>
+              <textarea id="b-notes" placeholder="Briefly describe your concern or symptoms…"></textarea>
             </div>
-            <button class="book-submit" id="book-btn" onclick="bookAppointment()">Book Appointment</button>
+            <button class="book-btn" id="book-btn" onclick="bookAppt()">Book Appointment</button>
           </div>
         </div>
 
       </div>
     </div>
   </div>
-</div>
 
-<!-- Reset password modal -->
-<div class="modal-overlay" id="reset-modal">
+  <!-- DASH FOOTER -->
+  <div class="dash-footer">
+    <div class="dash-footer-inner">
+      <div class="dash-footer-links">
+        <a href="contact.html">Contact Hospital</a>
+        <a href="about.html">About Us</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="dash-emergency">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.7"/></svg>
+        Emergency: <a href="tel:07089401337" style="color:var(--red);font-weight:700">07089401337</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /dashboard -->
+
+<!-- Reset modal -->
+<div class="modal" id="reset-modal">
   <div class="modal-box">
     <div class="modal-title">Reset Password</div>
-    <p class="modal-sub">Enter your email address and we'll send you a reset link.</p>
-    <div class="auth-error" id="reset-error"></div>
-    <div class="field">
-      <label>Email Address</label>
-      <input type="email" id="reset-email" placeholder="you@email.com"/>
-    </div>
+    <p class="modal-sub">Enter your email and we'll send a reset link.</p>
+    <div class="auth-err" id="reset-err"></div>
+    <div class="field"><label>Email Address</label><input type="email" id="reset-email" placeholder="you@email.com"/></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" style="flex:1" onclick="closeReset()">Cancel</button>
-      <button class="auth-submit" style="flex:1;margin-top:0;" onclick="handleReset()">Send Link</button>
+      <button class="modal-cancel" onclick="closeReset()">Cancel</button>
+      <button class="modal-send" onclick="handleReset()">Send Link</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════
-     FIREBASE
-══════════════════════ -->
+<!-- FIREBASE -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -779,258 +599,194 @@
            addDoc, query, where, orderBy, getDocs, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  /* ── CONFIG ── */
-  const firebaseConfig = {
-    apiKey: "AIzaSyC7GxgWwYiCatv48BmChXMXn0_QXeXmyk4",
-    authDomain: "healthmed-hospital.firebaseapp.com",
-    databaseURL: "https://healthmed-hospital-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "healthmed-hospital",
-    storageBucket: "healthmed-hospital.firebasestorage.app",
-    messagingSenderId: "946809468738",
-    appId: "1:946809468738:web:2c2ad8006b2f4c04307adb"
-  };
-
-  const app  = initializeApp(firebaseConfig);
+  const app  = initializeApp({
+    apiKey:"AIzaSyC7GxgWwYiCatv48BmChXMXn0_QXeXmyk4",
+    authDomain:"healthmed-hospital.firebaseapp.com",
+    databaseURL:"https://healthmed-hospital-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:"healthmed-hospital",
+    storageBucket:"healthmed-hospital.firebasestorage.app",
+    messagingSenderId:"946809468738",
+    appId:"1:946809468738:web:2c2ad8006b2f4c04307adb"
+  });
   const auth = getAuth(app);
   const db   = getFirestore(app);
 
-  /* ── HELPERS ── */
-  function showError(msg) {
-    const el = document.getElementById('auth-error');
-    el.textContent = msg;
-    el.classList.add('show');
+  /* ── Helpers ── */
+  function showErr(msg){const e=document.getElementById('auth-err');e.textContent=msg;e.classList.add('show')}
+  function clearErr(){const e=document.getElementById('auth-err');e.textContent='';e.classList.remove('show')}
+  function mapErr(code){
+    return{
+      'auth/email-already-in-use':'An account with this email already exists.',
+      'auth/weak-password':'Password must be at least 8 characters.',
+      'auth/invalid-email':'Please enter a valid email address.',
+      'auth/user-not-found':'No account found with this email.',
+      'auth/wrong-password':'Incorrect password.',
+      'auth/invalid-credential':'Incorrect email or password.',
+      'auth/too-many-requests':'Too many attempts. Please wait and try again.',
+    }[code]||'Something went wrong. Please try again.';
   }
-  function clearError() {
-    const el = document.getElementById('auth-error');
-    el.textContent = '';
-    el.classList.remove('show');
-  }
-  function setLoading(btnId, loading) {
-    const btn = document.getElementById(btnId);
-    btn.disabled = loading;
-    btn.innerHTML = loading ? '<span class="spinner"></span>' : btn.dataset.label || btn.textContent;
-    if (!btn.dataset.label) btn.dataset.label = btn.textContent;
-  }
-  function mapFirebaseError(code) {
-    const map = {
-      'auth/email-already-in-use':    'An account with this email already exists. Please log in.',
-      'auth/weak-password':           'Password must be at least 8 characters.',
-      'auth/invalid-email':           'Please enter a valid email address.',
-      'auth/user-not-found':          'No account found with this email.',
-      'auth/wrong-password':          'Incorrect password. Please try again.',
-      'auth/invalid-credential':      'Incorrect email or password.',
-      'auth/too-many-requests':       'Too many attempts. Please wait a moment and try again.',
-      'auth/network-request-failed':  'Network error. Please check your connection.',
-    };
-    return map[code] || 'Something went wrong. Please try again.';
+  function initials(fn,ln){return((fn||'')[0]+(ln||'')[0]).toUpperCase()||'?'}
+  function setLoading(id,on){
+    const b=document.getElementById(id);b.disabled=on;
+    if(!b.dataset.orig)b.dataset.orig=b.innerHTML;
+    b.innerHTML=on?'<span class="spinner"></span>':b.dataset.orig;
   }
 
-  /* ── TAB SWITCH ── */
-  window.switchTab = function(tab) {
-    clearError();
-    document.getElementById('form-login').style.display    = tab === 'login'    ? '' : 'none';
-    document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
-    document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
-    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  /* ── Tab switch ── */
+  window.switchTab=function(t){
+    clearErr();
+    document.getElementById('form-login').style.display=t==='login'?'':'none';
+    document.getElementById('form-reg').style.display=t==='register'?'':'none';
+    document.getElementById('tab-login').classList.toggle('active',t==='login');
+    document.getElementById('tab-reg').classList.toggle('active',t==='register');
   };
 
-  /* ── REGISTER ── */
-  window.handleRegister = async function() {
-    clearError();
-    const firstName = document.getElementById('reg-firstname').value.trim();
-    const lastName  = document.getElementById('reg-lastname').value.trim();
-    const phone     = document.getElementById('reg-phone').value.trim();
-    const dob       = document.getElementById('reg-dob').value;
-    const email     = document.getElementById('reg-email').value.trim();
-    const password  = document.getElementById('reg-password').value;
-
-    if (!firstName || !lastName)       return showError('Please enter your full name.');
-    if (!phone)                        return showError('Please enter your phone number.');
-    if (!dob)                          return showError('Please enter your date of birth.');
-    if (!email)                        return showError('Please enter your email address.');
-    if (password.length < 8)          return showError('Password must be at least 8 characters.');
-
-    setLoading('register-btn', true);
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'patients', cred.user.uid), {
-        firstName, lastName, phone, dob, email,
-        createdAt: serverTimestamp()
-      });
-    } catch (e) {
-      showError(mapFirebaseError(e.code));
-      setLoading('register-btn', false);
-    }
+  /* ── Register ── */
+  window.handleRegister=async function(){
+    clearErr();
+    const fn=document.getElementById('r-fn').value.trim();
+    const ln=document.getElementById('r-ln').value.trim();
+    const ph=document.getElementById('r-phone').value.trim();
+    const db2=document.getElementById('r-dob').value;
+    const em=document.getElementById('r-email').value.trim();
+    const pw=document.getElementById('r-pass').value;
+    if(!fn||!ln)return showErr('Please enter your full name.');
+    if(!ph)return showErr('Please enter your phone number.');
+    if(!db2)return showErr('Please enter your date of birth.');
+    if(!em)return showErr('Please enter your email address.');
+    if(pw.length<8)return showErr('Password must be at least 8 characters.');
+    setLoading('reg-btn',true);
+    try{
+      const c=await createUserWithEmailAndPassword(auth,em,pw);
+      await setDoc(doc(db,'patients',c.user.uid),{firstName:fn,lastName:ln,phone:ph,dob:db2,email:em,createdAt:serverTimestamp()});
+    }catch(e){showErr(mapErr(e.code));setLoading('reg-btn',false);}
   };
 
-  /* ── LOGIN ── */
-  window.handleLogin = async function() {
-    clearError();
-    const email    = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    if (!email || !password) return showError('Please enter your email and password.');
-
-    setLoading('login-btn', true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (e) {
-      showError(mapFirebaseError(e.code));
-      setLoading('login-btn', false);
-    }
+  /* ── Login ── */
+  window.handleLogin=async function(){
+    clearErr();
+    const em=document.getElementById('l-email').value.trim();
+    const pw=document.getElementById('l-pass').value;
+    if(!em||!pw)return showErr('Please enter your email and password.');
+    setLoading('login-btn',true);
+    try{await signInWithEmailAndPassword(auth,em,pw);}
+    catch(e){showErr(mapErr(e.code));setLoading('login-btn',false);}
   };
 
-  /* ── LOGOUT ── */
-  window.handleLogout = async function() {
-    await signOut(auth);
+  /* ── Logout ── */
+  window.handleLogout=async function(){await signOut(auth);};
+
+  /* ── Reset ── */
+  window.showReset=()=>document.getElementById('reset-modal').classList.add('show');
+  window.closeReset=()=>document.getElementById('reset-modal').classList.remove('show');
+  window.handleReset=async function(){
+    const em=document.getElementById('reset-email').value.trim();
+    const e=document.getElementById('reset-err');
+    if(!em){e.textContent='Please enter your email.';e.classList.add('show');return;}
+    try{
+      await sendPasswordResetEmail(auth,em);
+      e.style.background='#e8f5e9';e.style.color='#2e7d32';e.style.borderColor='#a5d6a7';
+      e.textContent='Reset email sent. Check your inbox.';e.classList.add('show');
+    }catch(ex){e.textContent=mapErr(ex.code);e.classList.add('show');}
   };
 
-  /* ── RESET PASSWORD ── */
-  window.showReset  = () => document.getElementById('reset-modal').classList.add('show');
-  window.closeReset = () => document.getElementById('reset-modal').classList.remove('show');
-  window.handleReset = async function() {
-    const email = document.getElementById('reset-email').value.trim();
-    const errEl = document.getElementById('reset-error');
-    if (!email) { errEl.textContent = 'Please enter your email.'; errEl.classList.add('show'); return; }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      errEl.style.background = '#e8f5e9';
-      errEl.style.color = '#2e7d32';
-      errEl.style.borderColor = '#a5d6a7';
-      errEl.textContent = 'Reset email sent. Check your inbox.';
-      errEl.classList.add('show');
-    } catch (e) {
-      errEl.textContent = mapFirebaseError(e.code);
-      errEl.classList.add('show');
-    }
-  };
-
-  /* ── LOAD PATIENT PROFILE ── */
-  async function loadProfile(uid) {
-    const snap = await getDoc(doc(db, 'patients', uid));
-    if (!snap.exists()) return;
-    const d = snap.data();
-    const fullName = `${d.firstName} ${d.lastName}`;
-    document.getElementById('dash-username').textContent = fullName;
-    document.getElementById('profile-name').textContent  = fullName;
-    document.getElementById('profile-email').textContent = d.email || '—';
-    document.getElementById('profile-phone').textContent = d.phone || '—';
-    document.getElementById('profile-dob').textContent   = d.dob   || '—';
-    if (d.createdAt?.toDate) {
-      document.getElementById('profile-since').textContent =
-        d.createdAt.toDate().toLocaleDateString('en-NG', { month:'long', year:'numeric' });
-    }
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('dash-greeting').textContent = `${greet}, ${d.firstName}`;
+  /* ── Load profile ── */
+  async function loadProfile(uid){
+    const snap=await getDoc(doc(db,'patients',uid));
+    if(!snap.exists())return;
+    const d=snap.data();
+    const fn=d.firstName||'',ln=d.lastName||'';
+    const full=`${fn} ${ln}`.trim();
+    const ini=initials(fn,ln);
+    document.getElementById('dash-username').textContent=full;
+    document.getElementById('dash-avatar').textContent=ini;
+    document.getElementById('p-avatar').textContent=ini;
+    document.getElementById('p-name').textContent=full||'—';
+    document.getElementById('p-email').textContent=d.email||'—';
+    document.getElementById('p-phone').textContent=d.phone||'—';
+    document.getElementById('p-dob').textContent=d.dob||'—';
+    if(d.createdAt?.toDate)document.getElementById('p-since').textContent=d.createdAt.toDate().toLocaleDateString('en-NG',{month:'long',year:'numeric'});
+    const h=new Date().getHours();
+    const gr=h<12?'Good morning':'Good afternoon';
+    document.getElementById('dash-greeting').textContent=`${gr}, ${fn||'there'}`;
+    document.getElementById('dash-date').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   }
 
-  /* ── LOAD APPOINTMENTS ── */
-  async function loadAppointments(uid) {
-    const list = document.getElementById('appointments-list');
-    try {
-      const q    = query(collection(db, 'appointments'), where('userId','==',uid), orderBy('createdAt','desc'));
-      const snap = await getDocs(q);
-      if (snap.empty) {
-        list.innerHTML = `<div class="appt-empty">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          No appointments yet. Book your first appointment on the right.
-        </div>`;
-        document.getElementById('stat-total').textContent     = '0';
-        document.getElementById('stat-upcoming').textContent  = '0';
-        document.getElementById('stat-completed').textContent = '0';
-        return;
-      }
-      let total = 0, upcoming = 0, completed = 0;
-      let html = '';
-      snap.forEach(d => {
-        const appt = d.data();
-        total++;
-        if (appt.status === 'completed') completed++;
-        else upcoming++;
-        const dateStr = appt.preferredDate || '';
-        const dateObj = dateStr ? new Date(dateStr + 'T00:00:00') : null;
-        const day     = dateObj ? dateObj.getDate() : '—';
-        const month   = dateObj ? dateObj.toLocaleString('en', { month:'short' }).toUpperCase() : '';
-        const badgeClass = appt.status === 'confirmed' ? 'confirmed' : appt.status === 'completed' ? 'completed' : 'pending';
-        const badgeText  = appt.status === 'confirmed' ? 'Confirmed' : appt.status === 'completed' ? 'Completed' : 'Pending';
-        html += `<div class="appt-item">
-          <div class="appt-date-box"><div class="appt-day">${day}</div><div class="appt-month">${month}</div></div>
-          <div class="appt-info">
-            <div class="appt-info-title">${appt.service || 'General Consultation'}</div>
-            <div class="appt-info-sub">${appt.preferredTime || ''} ${appt.notes ? '· ' + appt.notes.substring(0,50) + (appt.notes.length>50?'…':'') : ''}</div>
-          </div>
-          <span class="appt-badge ${badgeClass}">${badgeText}</span>
+  /* ── Load appointments ── */
+  async function loadAppts(uid){
+    const list=document.getElementById('appt-list');
+    try{
+      const q=query(collection(db,'appointments'),where('userId','==',uid),orderBy('createdAt','desc'));
+      const snap=await getDocs(q);
+      let total=0,upcoming=0,done=0,html='',nextAppt='No upcoming\nappointments';
+      const now=new Date();
+      snap.forEach(d=>{
+        const a=d.data();total++;
+        const apptDate=a.preferredDate?new Date(a.preferredDate+'T00:00:00'):null;
+        if(a.status==='completed')done++;
+        else{upcoming++;if(apptDate&&apptDate>=now&&nextAppt.includes('No')){nextAppt=`${a.service||'Consultation'}\n${a.preferredDate||''} ${a.preferredTime||''}`.trim();}}
+        const day=apptDate?apptDate.getDate():'—';
+        const mon=apptDate?apptDate.toLocaleString('en',{month:'short'}).toUpperCase():'';
+        const bc=a.status==='confirmed'?'confirmed':a.status==='completed'?'completed':'pending';
+        const bt=a.status==='confirmed'?'Confirmed':a.status==='completed'?'Completed':'Pending';
+        html+=`<div class="appt-item">
+          <div class="appt-date"><div class="appt-day">${day}</div><div class="appt-mon">${mon}</div></div>
+          <div class="appt-info"><div class="appt-svc">${a.service||'General Consultation'}</div><div class="appt-meta">${a.preferredTime||''}${a.notes?' · '+a.notes.substring(0,45)+(a.notes.length>45?'…':''):''}</div></div>
+          <span class="appt-badge ${bc}">${bt}</span>
         </div>`;
       });
-      list.innerHTML = html;
-      document.getElementById('stat-total').textContent     = total;
-      document.getElementById('stat-upcoming').textContent  = upcoming;
-      document.getElementById('stat-completed').textContent = completed;
-    } catch (e) {
-      list.innerHTML = '<div class="appt-empty">Unable to load appointments. Please refresh.</div>';
-    }
+      if(snap.empty)list.innerHTML=`<div class="appt-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>No appointments yet. Book your first one →</div>`;
+      else list.innerHTML=html;
+      document.getElementById('stat-total').textContent=total;
+      document.getElementById('stat-upcoming').textContent=upcoming;
+      document.getElementById('stat-done').textContent=done;
+      document.getElementById('upcoming-count').textContent=`${upcoming} upcoming appointment${upcoming!==1?'s':''}`;
+      document.getElementById('next-appt').textContent=nextAppt;
+      if(upcoming>0)document.getElementById('notif-badge').classList.add('show');
+    }catch(e){list.innerHTML='<div class="appt-empty">Unable to load appointments. Please refresh.</div>';}
   }
 
-  /* ── BOOK APPOINTMENT ── */
-  window.bookAppointment = async function() {
-    const user    = auth.currentUser;
-    if (!user) return;
-    const service = document.getElementById('book-service').value;
-    const date    = document.getElementById('book-date').value;
-    const time    = document.getElementById('book-time').value;
-    const notes   = document.getElementById('book-notes').value.trim();
-    if (!service) return alert('Please select a service.');
-    if (!date)    return alert('Please select a preferred date.');
-    if (!time)    return alert('Please select a preferred time.');
-
-    const btn = document.getElementById('book-btn');
-    btn.disabled = true;
-    btn.textContent = 'Booking…';
-    try {
-      await addDoc(collection(db, 'appointments'), {
-        userId: user.uid, service,
-        preferredDate: date, preferredTime: time,
-        notes, status: 'pending',
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('book-success').classList.add('show');
-      document.getElementById('book-service').value = '';
-      document.getElementById('book-date').value    = '';
-      document.getElementById('book-time').value    = '';
-      document.getElementById('book-notes').value   = '';
-      setTimeout(() => document.getElementById('book-success').classList.remove('show'), 6000);
-      await loadAppointments(user.uid);
-    } catch (e) {
-      alert('Booking failed. Please try again or call us directly.');
-    }
-    btn.disabled = false;
-    btn.textContent = 'Book Appointment';
+  /* ── Book appointment ── */
+  window.bookAppt=async function(){
+    const user=auth.currentUser;if(!user)return;
+    const svc=document.getElementById('b-service').value;
+    const dt=document.getElementById('b-date').value;
+    const tm=document.getElementById('b-time').value;
+    const nt=document.getElementById('b-notes').value.trim();
+    if(!svc)return alert('Please select a service.');
+    if(!dt)return alert('Please select a date.');
+    if(!tm)return alert('Please select a time.');
+    const btn=document.getElementById('book-btn');
+    btn.disabled=true;btn.textContent='Booking…';
+    try{
+      await addDoc(collection(db,'appointments'),{userId:user.uid,service:svc,preferredDate:dt,preferredTime:tm,notes:nt,status:'pending',createdAt:serverTimestamp()});
+      document.getElementById('book-ok').classList.add('show');
+      ['b-service','b-date','b-time','b-notes'].forEach(id=>document.getElementById(id).value='');
+      setTimeout(()=>document.getElementById('book-ok').classList.remove('show'),6000);
+      await loadAppts(user.uid);
+    }catch(e){alert('Booking failed. Please try again or call us on 07089401337.');}
+    btn.disabled=false;btn.textContent='Book Appointment';
   };
 
-  /* ── AUTH STATE WATCHER ── */
-  onAuthStateChanged(auth, async user => {
-    if (user) {
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('dashboard').style.display   = 'block';
-      // Set min date for booking to today
-      document.getElementById('book-date').min = new Date().toISOString().split('T')[0];
+  /* ── Auth watcher ── */
+  onAuthStateChanged(auth,async user=>{
+    if(user){
+      document.getElementById('auth-screen').style.display='none';
+      document.getElementById('dashboard').style.display='block';
+      document.getElementById('b-date').min=new Date().toISOString().split('T')[0];
       await loadProfile(user.uid);
-      await loadAppointments(user.uid);
-    } else {
-      document.getElementById('auth-screen').style.display = 'block';
-      document.getElementById('dashboard').style.display   = 'none';
-      setLoading('login-btn', false);
-      setLoading('register-btn', false);
+      await loadAppts(user.uid);
+    }else{
+      document.getElementById('auth-screen').style.display='grid';
+      document.getElementById('dashboard').style.display='none';
+      setLoading('login-btn',false);
+      setLoading('reg-btn',false);
     }
   });
 
-  /* ── ENTER KEY SUPPORT ── */
-  document.getElementById('login-password').addEventListener('keydown', e => {
-    if (e.key === 'Enter') window.handleLogin();
-  });
-  document.getElementById('reg-password').addEventListener('keydown', e => {
-    if (e.key === 'Enter') window.handleRegister();
-  });
+  /* ── Enter key ── */
+  document.getElementById('l-pass').addEventListener('keydown',e=>e.key==='Enter'&&window.handleLogin());
+  document.getElementById('r-pass').addEventListener('keydown',e=>e.key==='Enter'&&window.handleRegister());
 </script>
 </body>
 </html>
